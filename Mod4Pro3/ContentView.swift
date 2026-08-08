@@ -1,10 +1,10 @@
 // Note: Projects only run in Xcode Environment
-​​import SwiftUI
+import SwiftUI
 
 struct ContentView: View {
     var body: some View {
         ZStack {
-            ZStack{
+            ZStack {
                 Circle()
                     .foregroundColor(.blue)
                     .frame(width: 150, height: 150)
@@ -46,7 +46,7 @@ struct ContentView: View {
                     .frame(width: 60, height: 15)
                     .offset(x: 65, y: 250)
             }
-            ZStack{
+            ZStack {
                 Circle()
                     .foregroundColor(.yellow)
                     .frame(width: 35, height: 35)

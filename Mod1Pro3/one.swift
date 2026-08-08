@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct one: View {
+struct One: View {
     var body: some View {
-           Color.purple
+        Color.purple
     }
 }

@@ -1,9 +1,3 @@
-/**************************
-*   CODING STANDARD   *
-**************************/
-
-// Use named constants, descriptive names, and purpose comments before nontrivial scopes
-
 import SwiftUI
 
 /****************
@@ -13,10 +7,10 @@ import SwiftUI
 // Provide the SwiftUI application entry point
 @main
 struct SolutionApp: App {
-	// Build the root application scene
-	var body: some Scene {
-		WindowGroup {
-			ContentView()
-		}
-	}
+    // Build the root application scene
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
 }

@@ -1,22 +1,19 @@
-/**************************
-*   CODING STANDARD   *
-**************************/
-
-// Use named constants, descriptive names, and purpose comments before nontrivial scopes
-
 import SwiftUI
 
 struct ContentView: View {
-	@State private var isComplete = false
+    @State private var isComplete = false
 
-	var body: some View {
-		VStack(spacing: 16) {
-			Text("SAD15 Networking and Data Loading supplemental 2")
-			Text(isComplete ? "Ready for extension work." : "Work through the core requirements first.")
-			Button("Toggle Status") {
-				isComplete.toggle()
-			}
-		}
-		.padding()
-	}
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("SAD15 Networking and Data Loading supplemental 2")
+            Text(
+                isComplete
+                    ? "Ready for extension work."
+                    : "Work through the core requirements first.")
+            Button("Toggle Status") {
+                isComplete.toggle()
+            }
+        }
+        .padding()
+    }
 }

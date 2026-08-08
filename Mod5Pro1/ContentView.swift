@@ -1,5 +1,5 @@
 // Note: Projects only run in Xcode Environment
-​​import SwiftUI
+import SwiftUI
 
 struct ContentView: View {
     var body: some View {

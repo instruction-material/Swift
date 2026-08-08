@@ -1,6 +1,6 @@
-// Note: Projects only run in Xcode Environment
-​​import SwiftUI
 import MapKit
+// Note: Projects only run in Xcode Environment
+import SwiftUI
 
 struct ContentView: View {
     var body: some View {
@@ -9,7 +9,7 @@ struct ContentView: View {
                 Text("See the White House!")
                     .font(.title)
                     .fontWeight(.bold)
-                whiteHouse()
+                WhiteHouse()
             }
         }
     }
@@ -21,44 +21,56 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct whiteHouse: View {
+struct WhiteHouse: View {
     var body: some View {
-        VStack (spacing:-20){
+        VStack(spacing: -20) {
             NavigationLink(
-                destination: MapView(thelat: 38.897818228008646,thelong: -77.03650834471178, pickMap: 0, whichMap: [MKMapType.standard], mapType: MKMapType.standard),
+                destination: MapView(
+                    thelat: 38.897818228008646, thelong: -77.03650834471178,
+                    pickMap: 0, whichMap: [MKMapType.standard],
+                    mapType: MKMapType.standard),
                 label: {
                     Text("White House Standard Map")
-                })
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .border(Color.black)
-                .background(Color.blue)
-                .padding()
-            
+                }
+            )
+            .foregroundColor(.white)
+            .padding()
+            .frame(maxWidth: .infinity)
+            .border(Color.black)
+            .background(Color.blue)
+            .padding()
+
             NavigationLink(
-                destination: MapView(thelat: 38.897818228008646,thelong: -77.03650834471178, pickMap: 0, whichMap: [MKMapType.satellite], mapType: MKMapType.satellite),
+                destination: MapView(
+                    thelat: 38.897818228008646, thelong: -77.03650834471178,
+                    pickMap: 0, whichMap: [MKMapType.satellite],
+                    mapType: MKMapType.satellite),
                 label: {
                     Text("White House Satellite Map")
-                })
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .border(Color.black)
-                .background(Color.blue)
-                .padding()
+                }
+            )
+            .foregroundColor(.white)
+            .padding()
+            .frame(maxWidth: .infinity)
+            .border(Color.black)
+            .background(Color.blue)
+            .padding()
             NavigationLink(
-                destination: MapView(thelat: 38.897818228008646,thelong: -77.03650834471178, pickMap: 0, whichMap: [MKMapType.hybrid], mapType: MKMapType.hybrid),
+                destination: MapView(
+                    thelat: 38.897818228008646, thelong: -77.03650834471178,
+                    pickMap: 0, whichMap: [MKMapType.hybrid],
+                    mapType: MKMapType.hybrid),
                 label: {
                     Text("White House Satellite Flyover Map")
-                })
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .border(Color.black)
-                .background(Color.blue)
-                .padding()
-            
+                }
+            )
+            .foregroundColor(.white)
+            .padding()
+            .frame(maxWidth: .infinity)
+            .border(Color.black)
+            .background(Color.blue)
+            .padding()
+
         }
     }
 }

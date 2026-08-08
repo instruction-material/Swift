@@ -11,11 +11,12 @@ struct ContentView: View {
             .foregroundColor(.gray)
             .multilineTextAlignment(.center)
             .lineSpacing(10)
-    
-    //extra features that can be discussed about but not necessary
+
+            //extra features that can be discussed about but not necessary
             .rotation3DEffect(
                 .degrees(60),
-                axis: (x: 1, y: 0, z: 0))
+                axis: (x: 1, y: 0, z: 0)
+            )
             .shadow(color: .gray, radius: 2, x: 0, y: 10)
     }
 }

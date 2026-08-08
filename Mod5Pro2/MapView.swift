@@ -1,14 +1,14 @@
-import SwiftUI
 import MapKit
+import SwiftUI
 
-struct MapView: UIViewRepresentable  {
+struct MapView: UIViewRepresentable {
     var thelat = Double(34.011286)
     var thelong = Double(-116.166868)
     var pickMap = 0
     var whichMap = [MKMapType.hybrid, MKMapType.satellite, MKMapType.standard]
     var mapType = MKMapType.hybrid
     func makeUIView(context: Context) -> MKMapView {
-           MKMapView(frame: .zero)
+        MKMapView(frame: .zero)
     }
 
     func updateUIView(_ uiView: MKMapView, context: Context) {
@@ -19,8 +19,8 @@ struct MapView: UIViewRepresentable  {
         uiView.setRegion(region, animated: true)
         uiView.mapType = whichMap[pickMap]
     }
-    
-    }
+
+}
 
 
 struct MapView_Previews: PreviewProvider {

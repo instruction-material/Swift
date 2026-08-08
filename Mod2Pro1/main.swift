@@ -3,14 +3,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View{
-        NavigationView(){
-             NavigationLink(destination:one()){
+    var body: some View {
+        NavigationView {
+            NavigationLink(destination: One()) {
                 Text("About Me")
                     .font(.largeTitle)
                     .foregroundColor(Color.purple)
-              }
+            }
         }
-     }
+    }
 }
-
