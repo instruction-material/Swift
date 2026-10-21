@@ -1,63 +1,60 @@
 # Intro to Swift App Development
 
-This folder is structured as the future `instruction-material/Intro-to-Swift-App-Development`
-repository for the site course.
+Source repository: [instruction-material/Swift](https://github.com/instruction-material/Swift).
 
-The materials are organized around the recommended project sequence from the
-course plan:
+## Project packs
 
-1. `SAD1-Welcome-Profile-App`
-2. `SAD2-Media-Gallery-App`
-3. `SAD3-Multi-Tab-Hobby-App`
-4. `SAD4-Map-Places-App`
-5. `SAD5-Simple-Tracker-App`
-6. `SAD6-API-Reference-App`
-7. `SAD7-Publish-Ready-Capstone`
+1. [Welcome Profile App](SAD1-Welcome-Profile-App/README.md)
+2. [Media Gallery App](SAD2-Media-Gallery-App/README.md)
+3. [Multi-Tab Hobby App](SAD3-Multi-Tab-Hobby-App/README.md)
+4. [Map Places App](SAD4-Map-Places-App/README.md)
+5. [Simple Tracker App](SAD5-Simple-Tracker-App/README.md)
+6. [API Reference App](SAD6-API-Reference-App/README.md)
+7. [Publish-Ready Capstone](SAD7-Publish-Ready-Capstone/README.md)
 
-Optional enrichment:
+Each pack has a project reading, a `starter/` scaffold and a `solution/` source
+reference. The project reading defines the work and the expected behavior.
 
-- `SADX-SwiftUI-Shapes-Studio`
+## Lesson order
 
-Each project contains:
+The visible course uses SW1 through SW20:
 
-- `starter/` with a guided scaffold and TODOs
-- `solution/` with one complete reference implementation
-- `README.md` describing the goal of the project and how it fits the course
+- SW1–SW2: Mac setup, first launch and Xcode project anatomy.
+- SW3–SW7: SwiftUI layout, Swift basics, functions and data types, app structure,
+  and state/data flow.
+- SW8–SW15: media/maps, navigation, lists/forms, persistence, networking,
+  debugging/testing, accessibility and simulator/device validation.
+- SW16–SW20: development/distribution, signing, App Store Connect/TestFlight,
+  capstone user testing and the final publishing walkthrough.
 
-These source trees are intentionally Xcode-friendly rather than repository-wide
-Xcode projects. The expected workflow is:
+Names such as `SAD15` in older source folders are retained aliases. Follow the SW
+lesson titles for the course order.
 
-1. Create a new iOS App project in Xcode with SwiftUI.
-2. Replace the generated `App` and `ContentView` source files with the files in
-   the selected `starter/` or `solution/` folder.
-3. Add any extra source files from the same folder into the Xcode target.
-4. Reuse the folder name as the project working directory if the course needs a
-   dedicated archive of screenshots, metadata, or notes.
+## Run a project in Xcode
 
-The course itself starts with Apple ecosystem setup, simulator/device workflow,
-signing, and publishing concepts before deeper Swift and SwiftUI work.
+These packs contain SwiftUI source files for an iOS app target.
 
-## Legacy and Optional Material
+1. Create an iOS App project in Xcode using SwiftUI.
+2. Select one role, `starter/` or `solution/`, from the assigned project. Replace
+   the generated app entry point and `ContentView` with that role's source.
+   Keep one `@main` app entry point in the target.
+3. Add the role's remaining Swift files to the same target. Follow the project
+   reading for its data, assets and feature requirements.
+4. Select an installed simulator or configured device, then build and run the
+   app. Verify the behavior listed in the project reading.
 
-- The old `AD1`-`AD6` PDFs and `SWIFT-COMB.pdf` now live under `legacy/`.
-- `AD4` was extracted into `SADX-SwiftUI-Shapes-Studio` as an optional
-  enrichment pack rather than part of the core course sequence.
-- The main active course path is still `SAD1` through `SAD7`.
+## Supplemental and archived material
 
-## Legacy PDF Audit
+- [SwiftUI Shapes Studio](SAD-Swift-UI-Shapes-Studio/README.md) is optional visual
+  enrichment alongside the main project sequence.
+- The numbered `SAD-01-…` through `SAD-41-…` folders currently provide a generic
+  SwiftUI screen scaffold and a local state-toggle example. Their example does
+  not implement the topic-specific requirements of the linked course activity.
+- `Mod1Pro1` through `Mod5Pro3` retain individual legacy SwiftUI demonstrations.
+  They are separate reference examples, without starter/solution roles.
+- [Legacy archive scope](legacy/README.md) and the
+  [material decision record](LEGACY_MATERIAL_AUDIT.md) distinguish historical
+  references from the current project packs.
 
-The legacy `AD1`-`AD6` PDFs and `SWIFT-COMB.pdf` in this folder were audited
-against the current course design and the old source repo at
-`instruction-material/Swift`.
-
-They are not part of the active course system.
-
-- Do not merge them into the main `SAD1`-`SAD7` project sequence as core
-  curriculum.
-- Treat them as legacy instructor-reference material only.
-- If anything is revived later, the only reasonable candidate is the
-  shape-drawing content from `AD4`, and that has now been extracted into
-  `SADX-SwiftUI-Shapes-Studio` as optional enrichment rather than a required
-  project.
-
-See `LEGACY_MATERIAL_AUDIT.md` for the full decision record.
+The [source manifest](COURSE_SOURCE_MANIFEST.md) records catalog links. Its
+inventory check does not certify lesson completeness or an iOS build.

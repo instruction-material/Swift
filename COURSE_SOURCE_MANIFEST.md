@@ -8,9 +8,9 @@ Canonical source repository: `Swift`
 
 ## Verification Gate
 
-- Run `./verify-course-source.sh` from this repository root before treating the source pack as ready.
-- The verification gate checks for this manifest, the source backlog ledger, source-like files, removed Replit metadata, and any repo-specific readiness files.
-- Project-specific unit tests or build commands should still be run inside individual project folders when a project includes its own test harness.
+- Run `./verify-course-source.sh` from this repository root to check inventory and repository metadata.
+- The check requires this manifest and the source backlog ledger, finds at least one source-like file, and rejects committed Replit metadata.
+- This script does not compile Swift, launch an iOS app, verify a starter/reference contract or establish lesson completeness. Use the project-specific Xcode build/run and behavior checks for those requirements.
 
 ## Active Catalog Targets
 
@@ -85,4 +85,4 @@ Canonical source repository: `Swift`
 - Top-level folders: 63
 - Active linked folders: 63
 - Ledgered inactive/support folders: 0
-- Source-like files: 271
+- Source-like files: 273

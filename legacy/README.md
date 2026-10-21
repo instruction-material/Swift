@@ -1,16 +1,11 @@
-# Legacy Swift PDFs
+# Legacy Swift Archive
 
-This folder holds the archived `AD1`-`AD6` PDFs and `SWIFT-COMB.pdf` from the
-older Swift course sequence.
+Earlier archive notes refer to `AD1`–`AD6` and `SWIFT-COMB.pdf`. Those PDFs are
+not included in this repository; this directory contains only this scope note.
 
-They are preserved for historical or instructor-reference purposes only.
+[SwiftUI Shapes Studio](../SAD-Swift-UI-Shapes-Studio/README.md) preserves optional
+shape-composition practice associated with the earlier AD4 material.
 
-They are not part of the active `SAD1`-`SAD7` course path.
-
-Notes:
-
-- `AD4` is the only legacy module that was promoted into reusable material.
-- Its core idea now lives in `../SADX-SwiftUI-Shapes-Studio`.
-- The rest of the PDFs remain archived because the current Swift course already
-  covers their useful concepts more cleanly.
-
+Use the [current project packs and lesson order](../README.md) for the active
+course. The [material scope record](../LEGACY_MATERIAL_AUDIT.md) describes the
+separate roles of the legacy demos, supplemental scaffolds and current projects.
