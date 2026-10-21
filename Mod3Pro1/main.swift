@@ -5,8 +5,8 @@ struct ContentView: View {
     @State private var number = 0
 
     var body: some View {
-        // Display the button view from the tester project file
-        tester.ButtonStyleView(number: $number)
+        // Display the local button view
+        ButtonStyleView(number: $number)
     }
 }
 
