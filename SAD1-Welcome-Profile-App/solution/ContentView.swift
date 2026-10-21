@@ -55,7 +55,7 @@ struct ContentView: View {
 
                     InfoSection(title: profile.name, subtitle: profile.role) {
                         Text(profile.bio)
-                        foregroundStyle(.secondary)
+                        .foregroundStyle(.secondary)
                         Label(
                             profile.hometown, systemImage: "mappin.and.ellipse"
                         )
