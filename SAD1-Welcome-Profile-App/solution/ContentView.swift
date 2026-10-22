@@ -26,6 +26,7 @@ struct ContentView: View {
 
     @State private var note =
         "Remember to keep layouts readable on small screens."
+    @FocusState private var isEditingNote: Bool
 
     var body: some View {
         NavigationStack {
@@ -77,6 +78,7 @@ struct ContentView: View {
                     ) {
                         TextField("Write a note", text: $note, axis: .vertical)
                             .textFieldStyle(.roundedBorder)
+                            .focused($isEditingNote)
                         Text(note)
                             .font(.footnote)
                             .foregroundStyle(.secondary)
@@ -95,7 +97,16 @@ struct ContentView: View {
                 }
                 .padding(20)
             }
+            .scrollDismissesKeyboard(.interactively)
             .navigationTitle("Welcome")
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        isEditingNote = false
+                    }
+                }
+            }
         }
     }
 }

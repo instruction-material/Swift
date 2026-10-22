@@ -162,6 +162,14 @@ This reference has no disk persistence for the note. A fresh app process
 starts with its initial value. Compare that behavior with navigating to the
 detail and back while the welcome view remains in the navigation stack.
 
+Keyboard focus is separate from the note's value. The reference binds
+`@FocusState private var isEditingNote` to the text field with `.focused(...)`.
+Its keyboard toolbar's **Done** button sets that focus to `false`, dismissing
+the keyboard without changing the note. The scroll view also supports
+interactive keyboard dismissal. On a small simulator, edit the note, tap Done,
+then scroll to Open Detailed Profile and navigate back. The note stays edited;
+a fresh app process resets it to the initial value.
+
 The supplied reference demonstrates these patterns with its sample data. Its
 fixed-height header and horizontal tag row are also useful layout inspection
 cases. Test longer content and larger text before reusing that arrangement in
