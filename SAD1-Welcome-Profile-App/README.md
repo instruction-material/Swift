@@ -128,7 +128,7 @@ Keep the welcome-to-detail navigation and use fictional information.
   same profile data. A small named view is sufficient; a generic container is
   optional.
 - Give the destination an intentional About, Interests and Goals structure.
-  Remove the visible TODO text after replacing it with actual content.
+  Remove the visible `TODO` text after replacing it with actual content.
 - Keep readable text, a clear navigation action and a usable back path. Check
   the chosen sample in two simulator sizes and with a larger text setting.
   Record any clipping or crowded layout instead of treating a successful build
