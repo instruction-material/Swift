@@ -1,33 +1,24 @@
 import SwiftUI
 
-struct ReferenceEntry: Identifiable, Decodable {
-    let id: Int
-    let title: String
-    let body: String
-}
-
 struct ContentView: View {
-    @State private var entries: [ReferenceEntry] = []
-    @State private var isLoading = false
-    @State private var errorMessage = ""
+    @State private var store = ReferenceStore()
+    @State private var refreshID = 0
 
     var body: some View {
         NavigationStack {
             Group {
-                if isLoading {
-                    ProgressView("Loading reference data...")
-                } else if !errorMessage.isEmpty {
-                    ContentUnavailableView(
-                        "Could Not Load Data",
-                        systemImage: "wifi.slash",
-                        description: Text(errorMessage)
-                    )
-                } else {
-                    List(entries.prefix(12)) { entry in
+                switch store.state {
+                case .idle, .loading:
+                    ProgressView("Loading reference data…")
+                case .failed(let message):
+                    ContentUnavailableView("Could Not Load Data", systemImage: "wifi.slash",
+                                           description: Text(message))
+                case .loaded(let entries):
+                    List(entries) { entry in
                         NavigationLink(entry.title) {
                             ScrollView {
                                 Text(entry.body)
-                                frame(maxWidth: .infinity, alignment: .leading)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding()
                             }
                             .navigationTitle("Detail")
@@ -36,26 +27,14 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Reference")
-            .task {
-                await load()
+            .toolbar {
+                Button("Refresh") { refreshID += 1 }
+                    .disabled(store.state == .loading)
+            }
+            .task(id: refreshID) {
+                await store.load(client: ReferenceSource.sample.client)
             }
         }
-    }
-
-    private func load() async {
-        isLoading = true
-        errorMessage = ""
-
-        do {
-            let url = URL(string: "https://jsonplaceholder.typicode.com/posts")!
-            let (data, _) = try await URLSession.shared.data(from: url)
-            entries = try JSONDecoder().decode(
-                [ReferenceEntry].self, from: data)
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-
-        isLoading = false
     }
 }
 

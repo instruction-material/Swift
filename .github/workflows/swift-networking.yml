@@ -1,0 +1,57 @@
+name: Swift networking contracts
+
+on:
+  pull_request:
+    paths:
+      - SAD6-API-Reference-App/**
+      - .github/workflows/swift-networking.yml
+  push:
+    branches: [main]
+    paths:
+      - SAD6-API-Reference-App/**
+      - .github/workflows/swift-networking.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: swift-networking-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  networking-contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Compile Swift 6 contracts and exercise owned HTTP responses
+        run: python3 SAD6-API-Reference-App/verify-networking.py --proof output/networking-contracts.json
+      - name: Retain exact contract and process results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: networking-contracts
+          path: output/networking-contracts.json
+          if-no-files-found: error
+          retention-days: 7
+
+  networking-ios:
+    needs: networking-contracts
+    runs-on: macos-26
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify contracts on macOS and typecheck both iOS app roles
+        run: python3 SAD6-API-Reference-App/verify-networking.py --ios --proof output/networking-ios.json
+      - name: Retain installed-toolchain and iOS SDK results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: networking-ios
+          path: output/networking-ios.json
+          if-no-files-found: error
+          retention-days: 7
