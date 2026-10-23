@@ -5,6 +5,7 @@ on:
     paths:
       - SAD2-Media-Gallery-App/**
       - SAD3-Multi-Tab-Hobby-App/**
+      - SAD-Swift-UI-Shapes-Studio/**
       - tests/verify_swiftui_modifiers.py
       - .github/workflows/swiftui-view-modifiers.yml
   push:
@@ -12,6 +13,7 @@ on:
     paths:
       - SAD2-Media-Gallery-App/**
       - SAD3-Multi-Tab-Hobby-App/**
+      - SAD-Swift-UI-Shapes-Studio/**
       - tests/verify_swiftui_modifiers.py
       - .github/workflows/swiftui-view-modifiers.yml
 
@@ -30,7 +32,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - name: Check both app roles and reject the two original self-wrapping faults
+      - name: Check all three packs and reject their original self-wrapping faults
         run: python3 tests/verify_swiftui_modifiers.py --proof output/swiftui-modifiers.json
       - name: Retain exact SDK-typed ASTs and owned process evidence
         if: always()
