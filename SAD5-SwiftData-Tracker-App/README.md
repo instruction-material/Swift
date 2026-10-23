@@ -71,6 +71,9 @@ It does not replace an unavailable saved database with a new in-memory store.
 Its optional `storeURL` parameter supports an isolated failure demonstration
 without touching the normal app database.
 
+The query also exposes `fetchError`. The list reports a failed read separately
+from a successful empty result; an unavailable query is not labeled "No items".
+
 A write can also fail after a database opens, for example when the store is
 read-only. The reference reports the failed change and rolls it back. It does
 not clear an unsaved add title or dismiss an unsaved edit. Retry after resolving

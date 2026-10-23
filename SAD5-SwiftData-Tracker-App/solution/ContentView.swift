@@ -54,7 +54,15 @@ struct ContentView: View {
                 }
                 .listStyle(.plain)
                 .overlay {
-                    if items.isEmpty { ContentUnavailableView("No items", systemImage: "checklist") }
+                    if let failure = _items.fetchError {
+                        ContentUnavailableView {
+                            Label("Items unavailable", systemImage: "externaldrive.badge.exclamationmark")
+                        } description: {
+                            Text(failure.localizedDescription)
+                        }
+                    } else if items.isEmpty {
+                        ContentUnavailableView("No items", systemImage: "checklist")
+                    }
                 }
             }
             .padding()
