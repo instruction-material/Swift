@@ -1,0 +1,65 @@
+name: Swift tracker contracts
+
+on:
+  pull_request:
+    paths:
+      - SAD5-Simple-Tracker-App/**
+      - .github/workflows/swift-tracker.yml
+  push:
+    branches: [main]
+    paths:
+      - SAD5-Simple-Tracker-App/**
+      - .github/workflows/swift-tracker.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: swift-tracker-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tracker-contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Compile Swift 6 in-memory CRUD contracts
+        run: python3 SAD5-Simple-Tracker-App/verify-tracker.py --proof output/tracker-contracts.json
+      - name: Verify complete standalone starter and reference ZIPs
+        run: python3 SAD5-Simple-Tracker-App/tests/test_single_role_exports.py --proof output/tracker-role-exports.json
+      - name: Retain exact contract and process results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: tracker-contracts
+          path: |
+            output/tracker-contracts.json
+            output/tracker-role-exports.json
+          if-no-files-found: error
+          retention-days: 7
+
+  tracker-ios:
+    needs: tracker-contracts
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify contracts on macOS and typecheck both iOS app roles
+        run: python3 SAD5-Simple-Tracker-App/verify-tracker.py --ios --proof output/tracker-ios.json
+      - name: Verify each standalone role against the installed iOS SDK
+        run: python3 SAD5-Simple-Tracker-App/tests/test_single_role_exports.py --ios --proof output/tracker-role-exports-ios.json
+      - name: Retain installed-toolchain and iOS SDK results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: tracker-ios
+          path: |
+            output/tracker-ios.json
+            output/tracker-role-exports-ios.json
+          if-no-files-found: error
+          retention-days: 7

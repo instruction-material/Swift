@@ -1,75 +1,9 @@
 import SwiftUI
 
-struct TrackerItem: Identifiable, Codable {
-    let id: UUID
-    var title: String
-    var completed: Bool
-}
-
-final class TrackerStore: ObservableObject {
-    @Published var items: [TrackerItem] = []
-
-    private let storageKey = "simple-tracker-items"
-
-    init() {
-        load()
-    }
-
-    func add(title: String) {
-        let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else {
-            return
-        }
-
-        items.append(TrackerItem(id: UUID(), title: trimmed, completed: false))
-        save()
-    }
-
-    func toggle(_ item: TrackerItem) {
-        guard let index = items.firstIndex(where: { $0.id == item.id }) else {
-            return
-        }
-
-        items[index].completed.toggle()
-        save()
-    }
-
-    func delete(at offsets: IndexSet) {
-        items.remove(atOffsets: offsets)
-        save()
-    }
-
-    private func load() {
-        guard
-            let data = UserDefaults.standard.data(forKey: storageKey),
-            let decoded = try? JSONDecoder().decode(
-                [TrackerItem].self, from: data)
-        else {
-            items = [
-                TrackerItem(
-                    id: UUID(), title: "Sketch for 10 minutes", completed: false
-                ),
-                TrackerItem(
-                    id: UUID(), title: "Review SwiftUI notes", completed: true),
-            ]
-            return
-        }
-
-        items = decoded
-    }
-
-    private func save() {
-        guard let encoded = try? JSONEncoder().encode(items) else {
-            return
-        }
-
-        UserDefaults.standard.set(encoded, forKey: storageKey)
-    }
-}
-
 struct ContentView: View {
-    @EnvironmentObject private var store: TrackerStore
+    let store: TrackerStore
     @State private var draftTitle = ""
+    @State private var editingItem: TrackerItem?
 
     var body: some View {
         NavigationStack {
@@ -77,38 +11,34 @@ struct ContentView: View {
                 HStack {
                     TextField("New tracker item", text: $draftTitle)
                         .textFieldStyle(.roundedBorder)
-
                     Button("Add") {
-                        store.add(title: draftTitle)
-                        draftTitle = ""
+                        if store.add(title: draftTitle) { draftTitle = "" }
                     }
                     .buttonStyle(.borderedProminent)
+                    .disabled(draftTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
 
                 List {
                     ForEach(store.items) { item in
                         HStack {
                             Button {
-                                store.toggle(item)
+                                store.toggle(id: item.id)
                             } label: {
-                                Image(
-                                    systemName: item.completed
-                                        ? "checkmark.circle.fill" : "circle"
-                                )
-                                .foregroundStyle(
-                                    item.completed ? .green : .secondary)
+                                Image(systemName: item.completed ? "checkmark.circle.fill" : "circle")
                             }
                             .buttonStyle(.plain)
+                            .accessibilityLabel("Mark \(item.title) \(item.completed ? "incomplete" : "complete")")
 
-                            Text(item.title)
-                                .strikethrough(item.completed)
-
-                            Spacer()
+                            Button {
+                                editingItem = item
+                            } label: {
+                                Text(item.title)
+                                    .strikethrough(item.completed)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel("Edit \(item.title)")
                         }
-                        .accessibilityElement(children: .combine)
-                        .accessibilityLabel(
-                            "\(item.title), \(item.completed ? "completed" : "not completed")"
-                        )
                     }
                     .onDelete(perform: store.delete)
                 }
@@ -116,11 +46,51 @@ struct ContentView: View {
             }
             .padding()
             .navigationTitle("Tracker")
+            .sheet(item: $editingItem) { item in
+                TrackerEditor(item: item) { title in
+                    store.update(id: item.id, title: title)
+                }
+            }
+        }
+    }
+}
+
+private struct TrackerEditor: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var title: String
+    let save: (String) -> Bool
+    @State private var itemUnavailable = false
+
+    init(item: TrackerItem, save: @escaping (String) -> Bool) {
+        _title = State(initialValue: item.title)
+        self.save = save
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                TextField("Item title", text: $title)
+            }
+            .navigationTitle("Edit item")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        if save(title) { dismiss() }
+                        else { itemUnavailable = true }
+                    }
+                    .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+            }
+            .alert("Item no longer available", isPresented: $itemUnavailable) {
+                Button("Close") { dismiss() }
+            }
         }
     }
 }
 
 #Preview {
-    ContentView()
-        .environmentObject(TrackerStore())
+    ContentView(store: TrackerStore())
 }
