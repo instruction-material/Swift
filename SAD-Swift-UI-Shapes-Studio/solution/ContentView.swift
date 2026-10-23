@@ -95,10 +95,10 @@ struct ContentView: View {
                                 Circle()
                                     .fill(.background)
                                     .frame(width: 86, height: 86)
-                                overlay(
-                                    Text("AD4")
-                                        .font(.headline.weight(.semibold))
-                                )
+                                    .overlay(
+                                        Text("AD4")
+                                            .font(.headline.weight(.semibold))
+                                    )
                             }
                             .frame(width: 220, height: 220)
                             .frame(maxWidth: .infinity)

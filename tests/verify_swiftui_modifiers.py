@@ -1,4 +1,4 @@
-"""Typecheck gallery/hobby roles and reject modifiers that wrap their own view."""
+"""Typecheck reference app roles and reject modifiers that wrap their own view."""
 import argparse
 import datetime
 import hashlib
@@ -16,6 +16,15 @@ ROOT = Path(__file__).resolve().parents[1]
 CASES = [
     ("SAD2-Media-Gallery-App", "ArtworkCard", "padding", "        .padding(14)", "        padding(14)"),
     ("SAD3-Multi-Tab-Hobby-App", "ActivityDetailView", "foregroundStyle", "                .foregroundStyle(.blue)", "            foregroundStyle(.blue)"),
+    ("SAD-Swift-UI-Shapes-Studio", "ContentView", "overlay",
+     "                                    .overlay(\n"
+     "                                        Text(\"AD4\")\n"
+     "                                            .font(.headline.weight(.semibold))\n"
+     "                                    )",
+     "                                overlay(\n"
+     "                                    Text(\"AD4\")\n"
+     "                                        .font(.headline.weight(.semibold))\n"
+     "                                )"),
 ]
 
 def now():
@@ -23,7 +32,7 @@ def now():
 
 def implicit_self_calls(ast, view, modifier):
     return [line.strip() for line in ast.splitlines()
-            if "declref_expr" in line and "View extension." + modifier + " " in line
+            if "declref_expr" in line and re.search(r"View extension\." + re.escape(modifier) + r"(?:\s|\()", line)
             and re.search(r"Self -> " + re.escape(view) + r"(?:\s|\))", line)]
 
 def main():
@@ -120,14 +129,17 @@ def main():
             for source in sorted((ROOT / pack / "solution").glob("*.swift")):
                 raw = source.read_bytes()
                 if source.name == "ContentView.swift":
-                    assert raw.count(fixed.encode()) == 1
-                    raw = raw.replace(fixed.encode(), broken.encode(), 1)
+                    newline = b"\r\n" if b"\r\n" in raw else b"\n"
+                    fixed_bytes = fixed.encode().replace(b"\n", newline)
+                    broken_bytes = broken.encode().replace(b"\n", newline)
+                    assert raw.count(fixed_bytes) == 1
+                    raw = raw.replace(fixed_bytes, broken_bytes, 1)
                 destination = isolated / source.name
                 destination.write_bytes(raw)
                 sources.append(destination)
             check(pack, "solution", view, modifier, sources, True)
-        record.update(accepted=len(record["positiveRoles"]) == 4 and len(record["negativeControls"]) == 2,
-                      scope="Actual SDK-typed view composition with both original missing-dot faults rejected. Native app rendering remains a separate check.")
+        record.update(accepted=len(record["positiveRoles"]) == len(CASES) * 2 and len(record["negativeControls"]) == len(CASES),
+                      scope="Actual SDK-typed view composition with all original missing-dot faults rejected. Native app rendering remains a separate check.")
     finally:
         shutil.rmtree(work)
         record.update(endedAt=now(), ownedTemporarySourceRemoved=not work.exists())
