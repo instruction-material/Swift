@@ -1,0 +1,59 @@
+name: SwiftData tracker contracts
+
+on:
+  pull_request:
+    paths:
+      - SAD5-SwiftData-Tracker-App/**
+      - .github/workflows/swiftdata-tracker.yml
+  push:
+    branches: [main]
+    paths:
+      - SAD5-SwiftData-Tracker-App/**
+      - .github/workflows/swiftdata-tracker.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: swiftdata-tracker-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  swiftdata-contracts:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify models, actual file relaunch, read-only failures and both iOS roles
+        run: python3 SAD5-SwiftData-Tracker-App/verify-persistence.py --ios --proof output/swiftdata-contracts.json
+      - name: Retain exact contracts, source hashes and owned process records
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: swiftdata-contracts
+          path: output/swiftdata-contracts.json
+          if-no-files-found: error
+          retention-days: 7
+
+  swiftdata-role-exports:
+    needs: swiftdata-contracts
+    runs-on: macos-26
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify each isolated seven-file role ZIP and reject invalid packs
+        run: python3 SAD5-SwiftData-Tracker-App/tests/test_single_role_exports.py --ios --proof output/swiftdata-role-exports.json
+      - name: Retain exact role archives and verifier results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: swiftdata-role-exports
+          path: |
+            output/swiftdata-role-exports.json
+            output/swiftdata-role-exports-archives/*.zip
+          if-no-files-found: error
+          retention-days: 7
