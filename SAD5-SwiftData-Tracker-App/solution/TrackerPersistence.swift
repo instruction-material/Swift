@@ -18,9 +18,10 @@ enum TrackerPersistence {
                 let support = try FileManager.default.url(for: .applicationSupportDirectory,
                     in: .userDomainMask, appropriateFor: nil, create: true)
                 let folder = support.appendingPathComponent("CourseTracker", isDirectory: true)
-                try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
                 storeURL = folder.appendingPathComponent("tracker.store")
             }
+            try FileManager.default.createDirectory(at: storeURL.deletingLastPathComponent(),
+                withIntermediateDirectories: true)
             configuration = ModelConfiguration("Tracker", schema: schema, url: storeURL,
                 allowsSave: allowsSave, cloudKitDatabase: .none)
         }
