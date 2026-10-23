@@ -21,7 +21,7 @@ concurrency:
 jobs:
   networking-contracts:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -44,7 +44,9 @@ jobs:
   networking-ios:
     needs: networking-contracts
     runs-on: macos-26
-    timeout-minutes: 15
+    # Full pack 960s + two standalone roles 780s each + parity case 300s.
+    # The 55-minute job also allows setup, cleanup and artifact retention.
+    timeout-minutes: 55
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:

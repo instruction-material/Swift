@@ -15,6 +15,9 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 APP_FILES = ("APIReferenceApp.swift", "ContentView.swift", "ReferenceClient.swift", "ReferenceStore.swift")
 SUPPORT_FILES = ("README.md", "verify-networking.py", "tests/ReferenceContracts.swift")
+# Load wait 300 + version 30 + compile 180 + contracts 60 + SDK 30
+# + one role typecheck 180 + cleanup reserve 30.
+VERIFIER_TIMEOUT_SECONDS = 810
 
 
 def now():
@@ -23,7 +26,7 @@ def now():
 
 def execute(command, cwd, events):
     event = dict(parentTaskId="swift-single-role-export-contracts", parentPid=os.getpid(),
-                 cwd=str(cwd), command=command, startTime=now(), timeoutSeconds=540)
+                 cwd=str(cwd), command=command, startTime=now(), timeoutSeconds=VERIFIER_TIMEOUT_SECONDS)
     child = subprocess.Popen(command, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                              start_new_session=True)
     event["pid"] = child.pid
@@ -31,7 +34,7 @@ def execute(command, cwd, events):
     cleanup = "owned process exited and reaped"
     stdout, stderr = b"", b""
     try:
-        stdout, stderr = child.communicate(timeout=540)
+        stdout, stderr = child.communicate(timeout=VERIFIER_TIMEOUT_SECONDS)
     except BaseException:
         if child.poll() is None:
             os.killpg(child.pid, signal.SIGTERM)
