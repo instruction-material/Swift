@@ -115,8 +115,10 @@ struct PersistenceContracts {
             var rejected = false
             do { try repository.update(id: expected, title: "Must not save") }
             catch { rejected = true }
-            guard rejected, try rows(context)[0].title == "Edited record", !context.hasChanges
-            else { fatalError("Read-only failure did not restore saved data") }
+            guard rejected else { fatalError("Read-only configuration accepted a write") }
+            guard try rows(context)[0].title == "Edited record"
+            else { fatalError("Read-only rejection changed the stored title") }
+            guard !context.hasChanges else { fatalError("Read-only rejection left uncommitted changes") }
             result["saveRejected"] = true
         case "delete":
             guard let expected else { fatalError("Expected ID required") }

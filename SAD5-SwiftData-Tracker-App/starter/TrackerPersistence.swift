@@ -34,11 +34,13 @@ enum TrackerPersistence {
 enum TrackerChangeError: LocalizedError {
     case blankTitle
     case missingItem
+    case readOnlyStore
 
     var errorDescription: String? {
         switch self {
         case .blankTitle: "Enter an item title."
         case .missingItem: "This item is no longer available."
+        case .readOnlyStore: "This store is read-only. Changes were not saved."
         }
     }
 }
@@ -96,6 +98,9 @@ struct TrackerRepository {
     }
 
     private func commit(_ mutation: () -> Void) throws {
+        guard context.container.configurations.allSatisfy({ $0.allowsSave }) else {
+            throw TrackerChangeError.readOnlyStore
+        }
         mutation()
         do { try save(context) }
         catch {

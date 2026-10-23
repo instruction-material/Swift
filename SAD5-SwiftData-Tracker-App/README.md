@@ -75,8 +75,11 @@ without touching the normal app database.
 The query also exposes `fetchError`. The list reports a failed read separately
 from a successful empty result; an unavailable query is not labeled "No items".
 
-A write can also fail after a database opens, for example when the store is
-read-only. The reference reports the failed change and rolls it back. It does
+A write can also fail after a database opens. Before changing a model, the
+repository checks that its configured stores allow saving and explicitly
+rejects a read-only configuration. This keeps platform-specific save behavior
+from being treated as a successful write. For other save errors, the reference
+reports the failed change and rolls it back. It does
 not clear an unsaved add title or dismiss an unsaved edit. Retry after resolving
 the storage issue; do not delete the database as an error-recovery shortcut.
 
