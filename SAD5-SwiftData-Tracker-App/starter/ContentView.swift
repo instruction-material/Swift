@@ -5,6 +5,7 @@ struct ContentView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \TrackerRecord.createdAt) private var items: [TrackerRecord]
     @State private var draftTitle = ""
+    @FocusState private var draftIsFocused: Bool
     @State private var saveError = ""
     @State private var showError = false
 
@@ -16,10 +17,12 @@ struct ContentView: View {
                 HStack {
                     TextField("New tracker item", text: $draftTitle)
                         .textFieldStyle(.roundedBorder)
+                        .focused($draftIsFocused)
                     Button("Add") {
                         perform {
                             try repository.add(title: draftTitle)
                             draftTitle = ""
+                            draftIsFocused = false
                         }
                     }
                     .buttonStyle(.borderedProminent)

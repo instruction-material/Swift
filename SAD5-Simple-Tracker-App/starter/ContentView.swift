@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     let store: TrackerStore
     @State private var draftTitle = ""
+    @FocusState private var draftIsFocused: Bool
 
     var body: some View {
         NavigationStack {
@@ -10,8 +11,12 @@ struct ContentView: View {
                 HStack {
                     TextField("New tracker item", text: $draftTitle)
                         .textFieldStyle(.roundedBorder)
+                        .focused($draftIsFocused)
                     Button("Add") {
-                        if store.add(title: draftTitle) { draftTitle = "" }
+                        if store.add(title: draftTitle) {
+                            draftTitle = ""
+                            draftIsFocused = false
+                        }
                     }
                     .buttonStyle(.borderedProminent)
                     .disabled(draftTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
