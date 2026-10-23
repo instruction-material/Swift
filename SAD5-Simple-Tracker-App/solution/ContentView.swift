@@ -25,7 +25,7 @@ struct ContentView: View {
 
                 List {
                     ForEach(store.items) { item in
-                        HStack {
+                        HStack(alignment: .top) {
                             Button {
                                 store.toggle(id: item.id)
                             } label: {
