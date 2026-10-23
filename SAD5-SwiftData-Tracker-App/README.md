@@ -27,8 +27,9 @@ these completed behaviors. Each role is a separate runnable app.
    `TrackerPersistence.swift`. Replace the generated app entry point and
    ContentView. Use a new project, or remove the prior in-memory project's
    files from the target; keep one `@main` and one ContentView.
-3. Keep `tests/PersistenceContracts.swift` out of the iOS app target. It has its
-   own command-line entry point for the supplied verifier.
+3. Keep `Package.swift` and both files under `tests/` out of the iOS app target.
+   The package defines a separate Swift Testing target; the contract driver
+   has its own command-line entry point.
 4. Run on an installed iPhone simulator. Add a fictional item, mark it complete,
    edit its title and restart the app. In the reference, the same item and
    completion state return. In the starter, they reset until its app entry
@@ -124,7 +125,21 @@ On a Mac with Xcode installed, run from this project folder:
 python3 verify-persistence.py --ios --proof /tmp/swiftdata-tracker.json
 ```
 
-Use a new proof path per attempt. The verifier runs 28 model contracts for each
+The pack also contains five Swift Testing cases using `@Test` and `#expect`.
+They cover stable edits, rejected input, failed-save rollback, selected deletion
+and preview isolation. Run them directly with:
+
+```sh
+swift test --scratch-path /tmp/swiftdata-tracker-testing
+```
+
+The package tests the reference core when both roles are present. A selected-role
+export contains only its chosen role, so the same command tests that role's core.
+The test target uses the role's actual model and repository files; it does not
+include the app entry point or UI. It has no external package dependencies.
+
+Use a new proof path per attempt. The verifier runs the Swift Testing suite and
+28 model contracts for each
 included role, including blank/missing IDs, stable edits, rollback for failed
 insert/edit/toggle/delete operations, isolated memory stores and unavailable
 storage. It then launches separate processes against the same temporary file

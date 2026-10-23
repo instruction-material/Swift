@@ -9,6 +9,7 @@ import platform
 import signal
 import subprocess
 import tempfile
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parent
 APP_FILES = ("PersistentTrackerApp.swift", "ContentView.swift", "TrackerRecord.swift", "TrackerPersistence.swift")
@@ -74,7 +75,8 @@ def main():
     if len(roles) == 2:
         for name in ("TrackerRecord.swift", "TrackerPersistence.swift"):
             assert (ROOT / "starter" / name).read_bytes() == (ROOT / "solution" / name).read_bytes(), "Shared " + name + " must match between roles"
-    inputs = [Path(__file__).resolve(), ROOT / "tests/PersistenceContracts.swift"]
+    inputs = [Path(__file__).resolve(), ROOT / "tests/PersistenceContracts.swift",
+              ROOT / "Package.swift", ROOT / "tests/PersistenceTests.swift"]
     inputs += [ROOT / role / name for role in roles for name in APP_FILES]
     hashes = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
     events = []
@@ -102,7 +104,7 @@ def main():
                     command = [str(binary), phase, str(store)]
                     if identity:
                         command.append(identity)
-                    outcome = decode(run(command, 90, events))
+                    outcome = decode(run(command, 60, events))
                     assert outcome["accepted"] and outcome["phase"] == phase
                     if phase == "write":
                         identity = outcome["id"]
@@ -112,6 +114,20 @@ def main():
                     run(["/usr/bin/xcrun", "swiftc", "-typecheck", "-parse-as-library", "-swift-version", "6", "-sdk", ios_sdk,
                          "-target", platform.machine() + "-apple-ios17.0-simulator", "-module-cache-path", str(work / "ios-module-cache"),
                          *(str(ROOT / role / name) for name in APP_FILES)], 180, events)
+            xml = work / "swift-testing.xml"
+            run(["/usr/bin/xcrun", "swift", "test", "--package-path", str(ROOT),
+                 "--scratch-path", str(work / "swift-testing-build"), "--cache-path", str(work / "swiftpm-cache"),
+                 "--manifest-cache", "local", "--jobs", "1", "--disable-index-store",
+                 "--disable-xctest", "--enable-swift-testing", "--xunit-output", str(xml)], 300, events)
+            tree = ET.parse(xml)
+            cases = tree.findall(".//testcase")
+            assert len(cases) == 5
+            assert not tree.findall(".//failure") and not tree.findall(".//error") and not tree.findall(".//skipped")
+            assert all(int(suite.get(key, "0")) == 0 for suite in tree.iter("testsuite") for key in ("failures", "errors", "skipped"))
+            result["swiftTesting"] = dict(passed=5, failed=0, skipped=0,
+                role="solution" if "solution" in roles else "starter",
+                cases=[case.get("name") for case in cases], xunitXML=xml.read_text(),
+                xunitSha256=hashlib.sha256(xml.read_bytes()).hexdigest())
             if args.ios:
                 result.update(iosSDK=ios_sdk, iosRolesTypechecked=roles, iosSimulatorExecutionVerified=False)
         assert all(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest for name, digest in hashes.items()), "Source changed during verification"

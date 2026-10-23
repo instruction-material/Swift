@@ -14,9 +14,10 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 APP_FILES = ("PersistentTrackerApp.swift", "ContentView.swift", "TrackerRecord.swift", "TrackerPersistence.swift")
-SUPPORT_FILES = ("README.md", "verify-persistence.py", "tests/PersistenceContracts.swift")
-# Version/SDK60 + compile180 + models120 + eight process phases720 + iOS180 + cleanup60.
-VERIFIER_TIMEOUT_SECONDS = 1320
+SUPPORT_FILES = ("README.md", "verify-persistence.py", "tests/PersistenceContracts.swift",
+                 "Package.swift", "tests/PersistenceTests.swift")
+# Version/SDK90 + compile180 + models120 + eight process phases480 + iOS180 + SwiftTesting300 + cleanup60.
+VERIFIER_TIMEOUT_SECONDS = 1440
 
 
 def now():
@@ -89,7 +90,7 @@ def main():
                 if archive_dir:
                     (archive_dir / (role + ".zip")).write_bytes(raw)
                 with zipfile.ZipFile(io.BytesIO(raw)) as archive:
-                    assert len(archive.infolist()) == 7
+                    assert len(archive.infolist()) == 9
                     archive.extractall(work)
                 assert not (work / ("solution" if role == "starter" else "starter")).exists()
                 assert all(hashlib.sha256((work / name).read_bytes()).hexdigest() == digest for name, digest in hashes.items())
@@ -111,6 +112,7 @@ def main():
                 assert evidence["sourceRoles"] == [role]
                 assert evidence["externalRequests"] == 0
                 assert len(evidence["roleContracts"][0]["processRelaunchPhases"]) == 8
+                assert evidence["swiftTesting"]["passed"] == 5 and evidence["swiftTesting"]["role"] == role
                 if args.ios:
                     assert evidence["iosRolesTypechecked"] == [role]
                 check.update(passed=True, contractProof=evidence)

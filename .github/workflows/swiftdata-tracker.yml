@@ -45,7 +45,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - name: Verify each isolated seven-file role ZIP and reject invalid packs
+      - name: Verify each isolated nine-file role ZIP and reject invalid packs
         run: python3 SAD5-SwiftData-Tracker-App/tests/test_single_role_exports.py --ios --proof output/swiftdata-role-exports.json
       - name: Retain exact role archives and verifier results
         if: always()
