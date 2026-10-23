@@ -21,37 +21,47 @@ concurrency:
 jobs:
   networking-contracts:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
       - name: Compile Swift 6 contracts and exercise owned HTTP responses
         run: python3 SAD6-API-Reference-App/verify-networking.py --proof output/networking-contracts.json
+      - name: Verify complete standalone starter and reference ZIPs
+        run: python3 SAD6-API-Reference-App/tests/test_single_role_exports.py --proof output/networking-role-exports.json
       - name: Retain exact contract and process results
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: networking-contracts
-          path: output/networking-contracts.json
+          path: |
+            output/networking-contracts.json
+            output/networking-role-exports.json
           if-no-files-found: error
           retention-days: 7
 
   networking-ios:
     needs: networking-contracts
     runs-on: macos-26
-    timeout-minutes: 15
+    # Full pack 960s + two standalone roles 780s each + parity case 300s.
+    # The 55-minute job also allows setup, cleanup and artifact retention.
+    timeout-minutes: 55
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
       - name: Verify contracts on macOS and typecheck both iOS app roles
         run: python3 SAD6-API-Reference-App/verify-networking.py --ios --proof output/networking-ios.json
+      - name: Verify each standalone role against the installed iOS SDK
+        run: python3 SAD6-API-Reference-App/tests/test_single_role_exports.py --ios --proof output/networking-role-exports-ios.json
       - name: Retain installed-toolchain and iOS SDK results
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: networking-ios
-          path: output/networking-ios.json
+          path: |
+            output/networking-ios.json
+            output/networking-role-exports-ios.json
           if-no-files-found: error
           retention-days: 7
