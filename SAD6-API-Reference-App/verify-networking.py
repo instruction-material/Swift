@@ -1,4 +1,4 @@
-"""Verify both supplied networking layers using Swift 6 and owned loopback HTTP."""
+"""Verify the included networking app roles using Swift 6 and owned loopback HTTP."""
 import argparse
 import datetime
 import hashlib
@@ -15,6 +15,7 @@ import threading
 import time
 
 ROOT = Path(__file__).resolve().parent
+APP_FILES = ("APIReferenceApp.swift", "ContentView.swift", "ReferenceClient.swift", "ReferenceStore.swift")
 
 
 def now():
@@ -81,14 +82,19 @@ def main():
     signal.signal(signal.SIGINT, stop)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--proof", type=Path)
-    parser.add_argument("--ios", action="store_true", help="Also typecheck both app roles against the installed iOS SDK")
+    parser.add_argument("--ios", action="store_true", help="Also typecheck the included app roles against the installed iOS SDK")
     args = parser.parse_args()
     if args.proof:
         assert not args.proof.exists(), "Use a new proof path to preserve prior attempts"
         args.proof.parent.mkdir(parents=True, exist_ok=True)
+    roles = [role for role in ("starter", "solution") if (ROOT / role).is_dir()]
+    assert roles, "Include a starter or solution app folder"
+    for role in roles:
+        missing = [name for name in APP_FILES if not (ROOT / role / name).is_file()]
+        assert not missing, "Missing Swift app files for " + role + ": " + ", ".join(missing)
     events = []
-    result = dict(at=now(), accepted=False, externalRequests=0)
-    inputs = sorted([*ROOT.glob("starter/*.swift"), *ROOT.glob("solution/*.swift"),
+    result = dict(at=now(), accepted=False, externalRequests=0, sourceRoles=roles)
+    inputs = sorted([*(path for role in roles for path in (ROOT / role).glob("*.swift")),
                      ROOT / "tests/ReferenceContracts.swift", Path(__file__).resolve()])
     result["sourceHashes"] = {
         str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
@@ -107,8 +113,9 @@ def main():
                     break
                 assert time.monotonic() < deadline, "Mac load must settle below8 before starting this verification job"
                 time.sleep(10)
-        for name in ["ReferenceClient.swift", "ReferenceStore.swift"]:
-            assert (ROOT / "starter" / name).read_bytes() == (ROOT / "solution" / name).read_bytes()
+        if len(roles) == 2:
+            for name in ["ReferenceClient.swift", "ReferenceStore.swift"]:
+                assert (ROOT / "starter" / name).read_bytes() == (ROOT / "solution" / name).read_bytes()
         compiler = shutil.which("swiftc")
         assert compiler, "Install the course's Swift 6/Xcode toolchain first"
         result["compiler"] = run([compiler, "--version"], 30, events).decode().strip()
@@ -118,8 +125,8 @@ def main():
             binary = work / "contracts"
             run([compiler, "-swift-version", "6", "-parse-as-library",
                  "-module-cache-path", str(work / "module-cache"),
-                 str(ROOT / "solution/ReferenceClient.swift"),
-                 str(ROOT / "solution/ReferenceStore.swift"),
+                 str(ROOT / roles[0] / "ReferenceClient.swift"),
+                 str(ROOT / roles[0] / "ReferenceStore.swift"),
                  str(ROOT / "tests/ReferenceContracts.swift"), "-o", str(binary)], 180, events)
             server = ThreadingHTTPServer(("127.0.0.1", 0), Fixture)
             server.daemon_threads = True
@@ -134,13 +141,12 @@ def main():
                 assert platform.system() == "Darwin", "The iOS checks require an installed Xcode SDK"
                 sdk = run(["/usr/bin/xcrun", "--sdk", "iphonesimulator", "--show-sdk-path"], 30, events).decode().strip()
                 target = platform.machine() + "-apple-ios17.0-simulator"
-                for role in ["starter", "solution"]:
+                for role in roles:
                     sources = sorted(str(p) for p in (ROOT / role).glob("*.swift"))
-                    assert len(sources) == 4
                     run(["/usr/bin/xcrun", "swiftc", "-typecheck", "-parse-as-library", "-swift-version", "6",
                          "-sdk", sdk, "-target", target, "-module-cache-path", str(work / "ios-module-cache"),
                          *sources], 180, events)
-                result.update(iosSDK=sdk, iosTarget=target, iosRolesTypechecked=["starter", "solution"],
+                result.update(iosSDK=sdk, iosTarget=target, iosRolesTypechecked=roles,
                               iosSimulatorExecutionVerified=False)
             assert all(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest
                        for name, digest in result["sourceHashes"].items()), "Source changed during verification"

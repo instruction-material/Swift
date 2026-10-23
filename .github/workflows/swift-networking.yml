@@ -28,12 +28,16 @@ jobs:
           persist-credentials: false
       - name: Compile Swift 6 contracts and exercise owned HTTP responses
         run: python3 SAD6-API-Reference-App/verify-networking.py --proof output/networking-contracts.json
+      - name: Verify complete standalone starter and reference ZIPs
+        run: python3 SAD6-API-Reference-App/tests/test_single_role_exports.py --proof output/networking-role-exports.json
       - name: Retain exact contract and process results
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: networking-contracts
-          path: output/networking-contracts.json
+          path: |
+            output/networking-contracts.json
+            output/networking-role-exports.json
           if-no-files-found: error
           retention-days: 7
 
@@ -47,11 +51,15 @@ jobs:
           persist-credentials: false
       - name: Verify contracts on macOS and typecheck both iOS app roles
         run: python3 SAD6-API-Reference-App/verify-networking.py --ios --proof output/networking-ios.json
+      - name: Verify each standalone role against the installed iOS SDK
+        run: python3 SAD6-API-Reference-App/tests/test_single_role_exports.py --ios --proof output/networking-role-exports-ios.json
       - name: Retain installed-toolchain and iOS SDK results
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: networking-ios
-          path: output/networking-ios.json
+          path: |
+            output/networking-ios.json
+            output/networking-role-exports-ios.json
           if-no-files-found: error
           retention-days: 7

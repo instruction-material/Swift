@@ -12,6 +12,12 @@ four Swift files from that role to the app target: `APIReferenceApp.swift`,
 the generated app entry point and content view; keep one `@main` entry point.
 Select an installed simulator, build and run.
 
+A single-role copy keeps that role's four Swift files, this `README.md`,
+`verify-networking.py` and `tests/ReferenceContracts.swift`, preserving their
+folder names. Add only the selected role's app files to the Xcode target;
+`tests/ReferenceContracts.swift` is a separate command-line test entry point.
+Do not add that test entry point to the app target.
+
 Both roles start with three local sample entries. Sample mode passes embedded
 JSON through the same status-checking and decoding code as the live route,
 without opening a network connection. The reference also offers **Live data**,
@@ -108,6 +114,11 @@ From this pack's directory, run:
 python3 verify-networking.py
 ```
 
+The verifier uses the source roles present in the copy. With both roles, it
+also checks that their client and store implementations match. A single-role
+copy checks its own client and store without needing the other role; missing
+app files still fail verification.
+
 The command requires the installed Swift 6 toolchain and Python 3. It compiles
 the supplied client, store and contract checks, starts an owned HTTP fixture on
 loopback, then closes the server and removes its temporary build files. It
@@ -120,7 +131,7 @@ responses, loading and retry, cancellation, and requests completing in reverse
 order. The controlled request checks use continuations to choose completion
 order instead of depending on timing or a public outage.
 
-These checks verify the client and store contract. Build both roles in Xcode
+These checks verify the client and store contract. Build the selected role in Xcode
 and verify the source selector, search, detail navigation, retry, small-screen
 layout and larger text separately; a client test cannot prove view behavior.
 
