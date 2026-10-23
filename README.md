@@ -8,7 +8,8 @@ Source repository: [instruction-material/Swift](https://github.com/instruction-m
 2. [Media Gallery App](SAD2-Media-Gallery-App/README.md)
 3. [Multi-Tab Hobby App](SAD3-Multi-Tab-Hobby-App/README.md)
 4. [Map Places App](SAD4-Map-Places-App/README.md)
-5. [Simple Tracker App](SAD5-Simple-Tracker-App/README.md)
+5. [Simple Tracker App](SAD5-Simple-Tracker-App/README.md) and its
+   [SwiftData continuation](SAD5-SwiftData-Tracker-App/README.md)
 6. [API Reference App](SAD6-API-Reference-App/README.md)
 7. [Publish-Ready Capstone](SAD7-Publish-Ready-Capstone/README.md)
 

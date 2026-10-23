@@ -82,7 +82,7 @@ Canonical source repository: `Swift`
 
 ## Source Inventory
 
-- Top-level folders: 63
+- Top-level folders: 64
 - Active linked folders: 63
-- Ledgered inactive/support folders: 0
-- Source-like files: 279
+- Ledgered inactive/support folders: 1
+- Source-like files: 301

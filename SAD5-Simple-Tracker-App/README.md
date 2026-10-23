@@ -3,7 +3,7 @@
 This is the in-memory lists, forms and CRUD project for SW10. It uses Swift 6,
 SwiftUI, Observation and an iOS 17-or-later target. CRUD means create, read,
 update and delete. This app resets to two sample items on a fresh launch;
-SW11 adds persistent storage as a separate continuation.
+[SW11](../SAD5-SwiftData-Tracker-App/README.md) adds persistent storage as a separate continuation.
 
 ## Project
 

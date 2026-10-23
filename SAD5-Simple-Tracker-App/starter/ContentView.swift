@@ -35,6 +35,9 @@ struct ContentView: View {
                     // Add deletion using the store's delete(at:) method.
                 }
                 .listStyle(.plain)
+                .overlay {
+                    if store.items.isEmpty { ContentUnavailableView("No items", systemImage: "checklist") }
+                }
             }
             .padding()
             .navigationTitle("Tracker")
