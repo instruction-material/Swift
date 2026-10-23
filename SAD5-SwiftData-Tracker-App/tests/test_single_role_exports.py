@@ -113,9 +113,13 @@ def main():
                 assert evidence["externalRequests"] == 0
                 assert len(evidence["roleContracts"][0]["processRelaunchPhases"]) == 8
                 assert evidence["swiftTesting"]["passed"] == 5 and evidence["swiftTesting"]["role"] == role
+                testing_processes = [event for event in evidence["processes"]
+                                     if event["event"] == "end" and event["command"][:3] == ["/usr/bin/xcrun", "swift", "test"]]
+                assert len(testing_processes) == 1 and testing_processes[0]["exitCode"] == 0
+                assert "Invalid Exclude" not in testing_processes[0]["stderr"], "Standalone Swift package names a missing exclude"
                 if args.ios:
                     assert evidence["iosRolesTypechecked"] == [role]
-                check.update(passed=True, contractProof=evidence)
+                check.update(passed=True, contractProof=evidence, swiftPackageManifestClean=True)
             incomplete = temporary / "incomplete"
             incomplete.mkdir()
             raw, _ = role_zip("starter")
