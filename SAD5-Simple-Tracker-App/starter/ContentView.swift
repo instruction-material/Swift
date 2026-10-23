@@ -1,17 +1,7 @@
 import SwiftUI
 
-struct TrackerItem: Identifiable, Codable {
-    let id: UUID
-    var title: String
-    var completed: Bool
-}
-
 struct ContentView: View {
-    @State private var items = [
-        TrackerItem(
-            id: UUID(), title: "Sketch for 10 minutes", completed: false),
-        TrackerItem(id: UUID(), title: "Review SwiftUI notes", completed: true),
-    ]
+    let store: TrackerStore
     @State private var draftTitle = ""
 
     var body: some View {
@@ -20,56 +10,40 @@ struct ContentView: View {
                 HStack {
                     TextField("New tracker item", text: $draftTitle)
                         .textFieldStyle(.roundedBorder)
-
                     Button("Add") {
-                        guard
-                            !draftTitle.trimmingCharacters(
-                                in: .whitespacesAndNewlines
-                            ).isEmpty
-                        else {
-                            return
-                        }
-
-                        items.append(
-                            TrackerItem(
-                                id: UUID(), title: draftTitle, completed: false)
-                        )
-                        draftTitle = ""
+                        if store.add(title: draftTitle) { draftTitle = "" }
                     }
                     .buttonStyle(.borderedProminent)
+                    .disabled(draftTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
 
                 List {
-                    ForEach($items) { $item in
+                    ForEach(store.items) { item in
                         HStack {
                             Button {
-                                item.completed.toggle()
+                                store.toggle(id: item.id)
                             } label: {
-                                Image(
-                                    systemName: item.completed
-                                        ? "checkmark.circle.fill" : "circle")
+                                Image(systemName: item.completed ? "checkmark.circle.fill" : "circle")
                             }
                             .buttonStyle(.plain)
+                            .accessibilityLabel("Mark \(item.title) \(item.completed ? "incomplete" : "complete")")
 
                             Text(item.title)
                                 .strikethrough(item.completed)
                         }
                     }
+                    // Add deletion using the store's delete(at:) method.
                 }
                 .listStyle(.plain)
-
-                Text(
-                    "TODO: Add delete support and save the items between launches."
-                )
-                .font(.footnote)
-                .foregroundStyle(.secondary)
             }
             .padding()
             .navigationTitle("Tracker")
+            // Present an editor for the selected item's ID. Keep its draft
+            // separate from the store until Save; Cancel discards the draft.
         }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(store: TrackerStore())
 }

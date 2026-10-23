@@ -2,12 +2,11 @@ import SwiftUI
 
 @main
 struct SimpleTrackerApp: App {
-    @StateObject private var store = TrackerStore()
+    @State private var store = TrackerStore()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(store)
+            ContentView(store: store)
         }
     }
 }
