@@ -170,7 +170,7 @@ struct ActivityDetailView: View {
             Image(systemName: activity.icon)
                 .font(.system(size: 54))
                 .frame(maxWidth: .infinity)
-            foregroundStyle(.blue)
+                .foregroundStyle(.blue)
 
             Text(activity.title)
                 .font(.largeTitle.bold())

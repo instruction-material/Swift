@@ -136,7 +136,7 @@ struct ArtworkCard: View {
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(artwork.accent)
         }
-        padding(14)
+        .padding(14)
             .background(
                 Color(uiColor: UIColor.secondarySystemBackground),
                 in: RoundedRectangle(cornerRadius: 24))

@@ -1,0 +1,44 @@
+name: SwiftUI view composition
+
+on:
+  pull_request:
+    paths:
+      - SAD2-Media-Gallery-App/**
+      - SAD3-Multi-Tab-Hobby-App/**
+      - tests/verify_swiftui_modifiers.py
+      - .github/workflows/swiftui-view-modifiers.yml
+  push:
+    branches: [main]
+    paths:
+      - SAD2-Media-Gallery-App/**
+      - SAD3-Multi-Tab-Hobby-App/**
+      - tests/verify_swiftui_modifiers.py
+      - .github/workflows/swiftui-view-modifiers.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: swiftui-view-modifiers-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  swiftui-view-modifiers:
+    runs-on: macos-26
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Check both app roles and reject the two original self-wrapping faults
+        run: python3 tests/verify_swiftui_modifiers.py --proof output/swiftui-modifiers.json
+      - name: Retain exact SDK-typed ASTs and owned process evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: swiftui-view-modifiers
+          path: |
+            output/swiftui-modifiers.json
+            output/swiftui-modifier-logs/
+          if-no-files-found: error
+          retention-days: 7
