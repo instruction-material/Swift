@@ -31,7 +31,7 @@ struct ContentView: View {
                 }
                 List {
                     ForEach(items) { item in
-                        HStack {
+                        HStack(alignment: .top) {
                             Button {
                                 perform { try repository.toggle(id: item.id) }
                             } label: {
