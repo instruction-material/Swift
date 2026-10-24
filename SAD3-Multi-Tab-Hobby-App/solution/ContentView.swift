@@ -27,10 +27,10 @@ struct ContentView: View {
     var body: some View {
         TabView {
             NavigationStack {
-                VStack(spacing: 18) {
+                List {
                     HeroCard(activity: activities[0])
 
-                    List(activities) { activity in
+                    ForEach(activities) { activity in
                         NavigationLink {
                             ActivityDetailView(
                                 activity: activity,
@@ -44,9 +44,8 @@ struct ContentView: View {
                                 isFavorite: favorites.contains(activity.id))
                         }
                     }
-                    .listStyle(.plain)
                 }
-                .padding(.horizontal)
+                .listStyle(.plain)
                 .navigationTitle("Home")
             }
             .tabItem {
@@ -166,33 +165,37 @@ struct ActivityDetailView: View {
     let onToggleFavorite: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Image(systemName: activity.icon)
-                .font(.system(size: 54))
-                .frame(maxWidth: .infinity)
-                .foregroundStyle(.blue)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Image(systemName: activity.icon)
+                    .font(.system(size: 54))
+                    .frame(maxWidth: .infinity)
+                    .foregroundStyle(.blue)
 
-            Text(activity.title)
-                .font(.largeTitle.bold())
-            Text(activity.summary)
-                .foregroundStyle(.secondary)
-            Text("Scheduled for \(activity.day)")
-                .font(.headline)
+                Text(activity.title)
+                    .font(.largeTitle.bold())
+                Text(activity.summary)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("Scheduled for \(activity.day)")
+                    .font(.headline)
+                    .fixedSize(horizontal: false, vertical: true)
 
-            Button {
-                onToggleFavorite()
-            } label: {
-                Label(
-                    isFavorite ? "Remove Favorite" : "Save Favorite",
-                    systemImage: isFavorite ? "heart.slash" : "heart.fill"
-                )
-                .frame(maxWidth: .infinity)
+                Button {
+                    onToggleFavorite()
+                } label: {
+                    Label(
+                        isFavorite ? "Remove Favorite" : "Save Favorite",
+                        systemImage: isFavorite ? "heart.slash" : "heart.fill"
+                    )
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
             }
-            .buttonStyle(.borderedProminent)
-
-            Spacer()
+            .padding()
         }
-        .padding()
         .navigationTitle(activity.title)
     }
 }

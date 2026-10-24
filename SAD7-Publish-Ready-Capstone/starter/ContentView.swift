@@ -17,21 +17,24 @@ struct ContentView: View {
     var body: some View {
         TabView {
             NavigationStack {
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Capstone App")
-                        .font(.largeTitle.bold())
-                    Text(
-                        "This starter is a publish-ready shell. Finish the missing tabs and polish it like an app someone could actually test."
-                    )
-                    .foregroundStyle(.secondary)
-                    List(checklist) { task in
+                List {
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Capstone App")
+                            .font(.largeTitle.bold())
+                        Text(
+                            "This starter is a publish-ready shell. Finish the missing tabs and polish it like an app someone could actually test."
+                        )
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    }
+                    ForEach(checklist) { task in
                         Label(
                             task.title,
                             systemImage: task.done
                                 ? "checkmark.circle.fill" : "circle")
                     }
                 }
-                .padding()
+                .listStyle(.plain)
                 .navigationTitle("Home")
             }
             .tabItem {
