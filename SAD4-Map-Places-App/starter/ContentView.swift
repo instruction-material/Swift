@@ -36,49 +36,52 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 16) {
-                Map(position: $cameraPosition) {
-                    ForEach(places) { place in
-                        Marker(place.name, coordinate: place.coordinate)
-                    }
-                }
-                .frame(height: 260)
-                .clipShape(RoundedRectangle(cornerRadius: 24))
-
-                List(places) { place in
-                    Button {
-                        selectedPlace = place
-                        // TODO: Move the map camera to the selected place.
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(place.name)
-                            Text(place.subtitle)
-                                .font(.footnote)
-                                .foregroundStyle(.secondary)
+            ScrollView {
+                VStack(spacing: 16) {
+                    Map(position: $cameraPosition) {
+                        ForEach(places) { place in
+                            Marker(place.name, coordinate: place.coordinate)
                         }
                     }
-                }
-                .listStyle(.plain)
+                    .frame(height: 260)
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
 
-                if let selectedPlace {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(selectedPlace.name)
-                            .font(.headline)
-                        Text(selectedPlace.subtitle)
-                            .foregroundStyle(.secondary)
-                        Text(
-                            "TODO: Add a stronger detail card with visit notes and a callout style."
-                        )
-                        .font(.footnote)
+                    VStack(alignment: .leading, spacing: 16) {
+                        ForEach(places) { place in
+                            Button {
+                                selectedPlace = place
+                                // TODO: Move the map camera to the selected place.
+                            } label: {
+                                VStack(alignment: .leading) {
+                                    Text(place.name)
+                                    Text(place.subtitle)
+                                        .font(.footnote)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                        }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                    .background(
-                        Color(uiColor: UIColor.secondarySystemBackground),
-                        in: RoundedRectangle(cornerRadius: 20))
+
+                    if let selectedPlace {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(selectedPlace.name)
+                                .font(.headline)
+                            Text(selectedPlace.subtitle)
+                                .foregroundStyle(.secondary)
+                            Text(
+                                "TODO: Add a stronger detail card with visit notes and a callout style."
+                            )
+                            .font(.footnote)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                        .background(
+                            Color(uiColor: UIColor.secondarySystemBackground),
+                            in: RoundedRectangle(cornerRadius: 20))
+                    }
                 }
+                .padding()
             }
-            .padding()
             .navigationTitle("Places")
         }
     }

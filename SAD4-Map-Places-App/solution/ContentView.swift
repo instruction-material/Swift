@@ -43,58 +43,61 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 18) {
-                Map(position: $cameraPosition) {
-                    ForEach(places) { place in
-                        Marker(place.name, coordinate: place.coordinate)
-                            .tint(
-                                selectedPlace?.id == place.id ? .orange : .blue)
+            ScrollView {
+                VStack(spacing: 18) {
+                    Map(position: $cameraPosition) {
+                        ForEach(places) { place in
+                            Marker(place.name, coordinate: place.coordinate)
+                                .tint(
+                                    selectedPlace?.id == place.id ? .orange : .blue)
+                        }
                     }
-                }
-                .frame(height: 280)
-                .clipShape(RoundedRectangle(cornerRadius: 24))
+                    .frame(height: 280)
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
 
-                List(places) { place in
-                    Button {
-                        focus(on: place)
-                    } label: {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(place.name)
-                                    .font(.headline)
-                                Text(place.subtitle)
-                                    .font(.footnote)
-                                    .foregroundStyle(.secondary)
-                            }
+                    VStack(alignment: .leading, spacing: 16) {
+                        ForEach(places) { place in
+                            Button {
+                                focus(on: place)
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(place.name)
+                                            .font(.headline)
+                                        Text(place.subtitle)
+                                            .font(.footnote)
+                                            .foregroundStyle(.secondary)
+                                    }
 
-                            Spacer()
+                                    Spacer()
 
-                            if selectedPlace?.id == place.id {
-                                Image(systemName: "location.fill")
-                                    .foregroundStyle(.orange)
+                                    if selectedPlace?.id == place.id {
+                                        Image(systemName: "location.fill")
+                                            .foregroundStyle(.orange)
+                                    }
+                                }
                             }
                         }
                     }
-                }
-                .listStyle(.plain)
 
-                if let selectedPlace {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text(selectedPlace.name)
-                            .font(.headline)
-                        Text(selectedPlace.detail)
-                            .foregroundStyle(.secondary)
-                        Label(selectedPlace.subtitle, systemImage: "map")
-                            .font(.footnote)
+                    if let selectedPlace {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(selectedPlace.name)
+                                .font(.headline)
+                            Text(selectedPlace.detail)
+                                .foregroundStyle(.secondary)
+                            Label(selectedPlace.subtitle, systemImage: "map")
+                                .font(.footnote)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                        .background(
+                            Color(uiColor: UIColor.secondarySystemBackground),
+                            in: RoundedRectangle(cornerRadius: 20))
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                    .background(
-                        Color(uiColor: UIColor.secondarySystemBackground),
-                        in: RoundedRectangle(cornerRadius: 20))
                 }
+                .padding()
             }
-            .padding()
             .navigationTitle("Places")
             .onAppear {
                 if let first = places.first {
