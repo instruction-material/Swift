@@ -65,8 +65,8 @@ termination.
 4. Give Settings accurate information and working controls rather than
    claiming the reference's fixture distribution state.
 5. Verify small-display layout, larger text, useful action labels and the
-   empty/error states relevant to the chosen flow. Check scrolling when a
-   fixed-height List is nested inside a ScrollView.
+   empty/error states relevant to the chosen flow. Keep the checklist in the same scrolling
+   content as the introduction so every control remains reachable.
 
 The reference demonstrates bound toggles and populated informational tabs.
 Its Explore list describes features; it does not implement every learner's

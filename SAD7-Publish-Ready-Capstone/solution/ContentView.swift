@@ -50,13 +50,12 @@ struct ContentView: View {
                             Color(uiColor: UIColor.secondarySystemBackground),
                             in: RoundedRectangle(cornerRadius: 22))
 
-                        List {
+                        VStack(spacing: 16) {
                             ForEach($checklist) { $task in
                                 Toggle(task.title, isOn: $task.done)
+                                    .padding(.vertical, 4)
                             }
                         }
-                        .frame(height: 230)
-                        .listStyle(.plain)
                     }
                     .padding()
                 }

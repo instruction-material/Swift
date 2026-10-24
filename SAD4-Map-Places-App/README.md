@@ -77,6 +77,10 @@ The reference's marker tint, selected-row symbol and detail read that same
 selection. Its onAppear initially focuses the first record. The starter
 initially has no selected detail.
 
+Both roles place the map, named selection buttons and detail in one ScrollView.
+The vertically stacked buttons grow with the text rather than competing for
+height with the fixed map. Scroll to reach every place and the full detail.
+
 ## Core project
 
 1. Keep all supplied records and marker names. Make each row selection update
@@ -86,7 +90,7 @@ initially has no selected detail.
 3. Distinguish the selected place without relying on color alone and retain
    its accessible name.
 4. Keep list and detail reachable on a small display at larger text sizes.
-   Test the actual layout around the fixed-height map.
+   Test scrolling around the fixed-height map.
 
 Pause after selecting a row. Predict the selected value/ID, center, span,
 marker and detail title before running.
