@@ -66,6 +66,14 @@ The supplied reference keeps choices in memory. Tab switching should preserve
 them during a launch; termination resets them. Saving source preserves code,
 rather than the running app's current choices.
 
+## Keep text readable as it grows
+
+Home places the hero and activity rows in one List, with ForEach supplying the
+linked rows. Each item can grow with the text size without squeezing a second
+scrolling region. ActivityDetailView uses one ScrollView for its full summary,
+schedule and favorite action. Its text wraps to the available width rather than
+shrinking or ending in an ellipsis.
+
 ## Core project
 
 1. Keep the three tabs and schedule. Open an activity detail from a Home row.
@@ -93,7 +101,7 @@ table before comparing the reference.
 | Return to detail and remove it | Membership and action agree; Favorites becomes empty |
 | Select two activities, then remove one | The other retains its identity and membership |
 | Present and dismiss the added sheet | Dismissal works without losing the existing selection |
-| Test small display and larger text | Rows, detail and actions remain reachable |
+| Test small display and largest accessibility text | Scroll to read the complete summary, schedule and favorite label; every action remains reachable |
 | Terminate and relaunch | The in-memory reference returns to its initial empty set |
 
 The reference adds HeroCard, ActivityRow, a summary and ActivityDetailView.
