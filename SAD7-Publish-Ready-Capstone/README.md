@@ -33,7 +33,8 @@ placeholder/development instructions with the chosen app's actual content.
 ## Turn read-only task values into state
 
 The starter's ReleaseTask.done is `let` and its checklist is a plain constant,
-so the supplied labels are read-only. The reference uses `var done: Bool`
+so the supplied labels are read-only. The introduction and checklist share one
+List so both remain readable and reachable at larger text sizes. The reference uses `var done: Bool`
 and `@State private var checklist`, then binds its toggles:
 
 ```swift
