@@ -74,6 +74,10 @@ scrolling region. ActivityDetailView uses one ScrollView for its full summary,
 schedule and favorite action. Its text wraps to the available width rather than
 shrinking or ending in an ellipsis.
 
+ActivityRow fits its decorative symbol inside a 38-point square. A frame alone
+does not resize a symbol; `resizable()` and `scaledToFit()` keep it inside that
+space as the adjacent title and day grow and wrap.
+
 ## Core project
 
 1. Keep the three tabs and schedule. Open an activity detail from a Home row.
