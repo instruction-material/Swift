@@ -108,12 +108,14 @@ area. The text and padding value are identical; the composition order differs.
 Compare the colored bounds in the preview, then change the padding value and
 predict which bounds will change.
 
-In the starter card, `RoundedRectangle` creates a shape, `fill` gives it a
-color and `frame(height: 180)` constrains that layer's height. The `overlay`
-places profile text above it, aligned to the bottom leading edge. The text
-stack's own padding separates it from that edge. These modifiers act on
-different levels of the tree; moving a modifier to a parent can affect a whole
-group instead of one label.
+In the starter card, a `VStack` contains the profile text.
+`fixedSize(horizontal: false, vertical: true)` lets the text wrap and keeps its
+required height. Padding separates it from the card edges, and
+`frame(maxWidth: .infinity, minHeight: 180, alignment: .bottomLeading)` gives
+the padded stack a minimum height while allowing it to grow. The blue
+`background` uses a `RoundedRectangle` to follow those bounds. These modifiers
+act on different levels of the tree; moving a modifier to a parent can affect
+a whole group instead of one label.
 
 ## Core project
 
@@ -170,17 +172,20 @@ interactive keyboard dismissal. On a small simulator, edit the note, tap Done,
 then scroll to Open Detailed Profile and navigate back. The note stays edited;
 a fresh app process resets it to the initial value.
 
-The supplied reference demonstrates these patterns with its sample data. Its
-fixed-height header and horizontal tag row are also useful layout inspection
-cases. Test longer content and larger text before reusing that arrangement in
-another app; those layouts need separate acceptance evidence.
+The reference header places its gradient behind the padded text stack and
+uses `minHeight: 220`, so longer text can increase the banner height.
+`TagRow` reads `dynamicTypeSize` from the environment. Its `AnyLayout` uses
+an `HStackLayout` at standard sizes and a `VStackLayout` at accessibility
+sizes, keeping the same interest views in either arrangement. Test longer
+content and larger text before reusing it in another app; those layouts need
+separate acceptance evidence.
 
 ## Distinct follow-up work
 
 Choose one extension and continue the same project:
 
-- **Adaptive interests:** Replace the horizontal-only tag arrangement with an
-  adaptive grid. `LazyVGrid` accepts a `columns` array; a
+- **Adaptive interests:** Extend the two tag layouts with a width-adaptive
+  grid. `LazyVGrid` accepts a `columns` array; a
   `GridItem(.adaptive(minimum: 90))` allows columns to be chosen from available
   width. Use one `ForEach` entry per interest. Compare short and long labels at
   two widths and a larger text size; tune the minimum to the actual content.
