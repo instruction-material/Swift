@@ -68,9 +68,8 @@ struct ContentView: View {
                                 .font(.headline)
                             Text(selectedPlace.subtitle)
                                 .foregroundStyle(.secondary)
-                            Text(
-                                "TODO: Add a stronger detail card with visit notes and a callout style."
-                            )
+                            // TODO: Replace this empty state with a place-specific visit note.
+                            Text("No visit notes yet.")
                             .font(.footnote)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
