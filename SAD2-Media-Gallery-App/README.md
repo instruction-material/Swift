@@ -42,9 +42,16 @@ Predict the results: All has four cards, Photo two, Workspace one and
 Illustration one. The existing comment suggests future refactoring, rather
 than indicating a missing filter.
 
-LazyVGrid arranges two flexible columns inside a ScrollView. A NavigationLink
-passes the selected artwork to ArtworkDetailView; its `let artwork` is an
-input value, rather than another data lookup.
+LazyVGrid uses two flexible columns at standard text sizes and one at
+accessibility text sizes. `dynamicTypeSize.isAccessibilitySize` selects the
+column layout. Cards keep their available width and let text grow vertically.
+A NavigationLink passes the selected artwork to ArtworkDetailView; its
+`let artwork` is an input value, rather than another data lookup.
+
+Both detail screens use a ScrollView so the complete description stays
+reachable on a small display. Text uses
+`fixedSize(horizontal: false, vertical: true)` to wrap within its width without
+ending in an ellipsis. The reference's favorite label follows the same rule.
 
 ## Own favorites in the common parent
 
@@ -67,8 +74,8 @@ code, not the running app's favorites across termination.
    action at their shared parent.
 2. Pass membership and the action to the detail. Label the action with its next
    change and show membership on the matching card with a derived total.
-3. Expand fictional detail content. Replace the visible TODO with useful
-   gallery content while keeping the assignment in this README.
+3. Expand fictional detail content. Keep assignment notes in this README
+   and source comments; show artwork content in the running app.
 4. Test small-display and larger-text layout. A ScrollView does not repair an
    oversized child automatically.
 
@@ -84,10 +91,9 @@ before comparing the reference.
 | Open a card and return | Correct detail opens; selected category remains |
 | Toggle a favorite twice | First adds it and second removes it |
 | Favorite a Photo, change category, return | Selection stays attached to that artwork |
-| Use a small screen and larger text | Titles and the favorite action are readable and reachable |
+| Use a small screen and the largest accessibility text | Cards use one column; the complete description and favorite label are readable and reachable |
 | Terminate and relaunch | The in-memory reference starts with an empty set |
 
 The reference extracts ArtworkCard, adds a detail field and shows the derived
-count. It retains the two-column grid, whose accessibility still needs an
-actual layout check. An optional extension adds Favorites-only filtering or
-adapts the column count to available width and text size.
+count. Check both column layouts in a running simulator. An optional extension
+adds Favorites-only filtering.

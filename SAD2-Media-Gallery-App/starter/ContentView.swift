@@ -9,6 +9,7 @@ struct Artwork: Identifiable {
 }
 
 struct ContentView: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     private let artworks = [
         Artwork(
             title: "Sunset Poster", category: "Photo", accent: .orange,
@@ -37,11 +38,10 @@ struct ContentView: View {
                 }
                 .pickerStyle(.segmented)
 
+                // TODO: Add shared favorites and expand the artwork details.
                 ScrollView {
                     LazyVGrid(
-                        columns: [
-                            GridItem(.flexible()), GridItem(.flexible()),
-                        ], spacing: 16
+                        columns: columns, spacing: 16
                     ) {
                         ForEach(filteredArtworks) { artwork in
                             NavigationLink {
@@ -68,14 +68,16 @@ struct ContentView: View {
                         }
                     }
                 }
-
-                Text("TODO: Add favorites or a stronger detail experience.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
             }
             .padding()
             .navigationTitle("Gallery")
         }
+    }
+
+    private var columns: [GridItem] {
+        dynamicTypeSize.isAccessibilitySize
+            ? [GridItem(.flexible())]
+            : [GridItem(.flexible()), GridItem(.flexible())]
     }
 
     private var filteredArtworks: [Artwork] {
@@ -92,17 +94,20 @@ struct ArtworkDetailView: View {
     let artwork: Artwork
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            RoundedRectangle(cornerRadius: 28)
-                .fill(artwork.accent.gradient)
-                .frame(height: 220)
-            Text(artwork.title)
-                .font(.largeTitle.bold())
-            Text(artwork.summary)
-                .foregroundStyle(.secondary)
-            Spacer()
+        ScrollView {
+            VStack(alignment: .leading, spacing: 18) {
+                RoundedRectangle(cornerRadius: 28)
+                    .fill(artwork.accent.gradient)
+                    .frame(height: 220)
+                Text(artwork.title)
+                    .font(.largeTitle.bold())
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(artwork.summary)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding()
         }
-        .padding()
         .navigationTitle(artwork.title)
     }
 }
