@@ -28,20 +28,20 @@ struct ContentView: View {
                         .foregroundStyle(.secondary)
                     }
 
-                    RoundedRectangle(cornerRadius: 24)
-                        .fill(Color.blue.opacity(0.15))
-                        .frame(height: 180)
-                        .overlay(alignment: .bottomLeading) {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text(profile.name)
-                                    .font(.title.bold())
-                                Text(profile.role)
-                                    .foregroundStyle(.secondary)
-                                Text(profile.hometown)
-                                    .font(.subheadline)
-                            }
-                            .padding(20)
-                        }
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(profile.name)
+                            .font(.title.bold())
+                        Text(profile.role)
+                            .foregroundStyle(.secondary)
+                        Text(profile.hometown)
+                            .font(.subheadline)
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(20)
+                    .frame(maxWidth: .infinity, minHeight: 180, alignment: .bottomLeading)
+                    .background(
+                        Color.blue.opacity(0.15),
+                        in: RoundedRectangle(cornerRadius: 24))
 
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Starter Tasks")

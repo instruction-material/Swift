@@ -45,7 +45,7 @@ def main():
     logs = proof_path.parent / "swiftui-modifier-logs"
     logs.mkdir(exist_ok=True)
     processes = []
-    record = dict(startedAt=now(), accepted=False, positiveRoles=[], negativeControls=[],
+    record = dict(startedAt=now(), accepted=False, positiveRoles=[], negativeControls=[], welcomeRoles=[],
                   processes=processes, nativeUIExecutionVerified=False)
     task = "swiftui-modifier-contracts-" + os.environ.get("GITHUB_RUN_ID", str(os.getpid()))
 
@@ -138,7 +138,16 @@ def main():
                 destination.write_bytes(raw)
                 sources.append(destination)
             check(pack, "solution", view, modifier, sources, True)
-        record.update(accepted=len(record["positiveRoles"]) == len(CASES) * 2 and len(record["negativeControls"]) == len(CASES),
+        for role in ["starter", "solution"]:
+            sources = sorted((ROOT / "SAD1-Welcome-Profile-App" / role).glob("*.swift"))
+            assert len(sources) == 2
+            run("welcome-" + role, ["/usr/bin/xcrun", "swiftc", "-typecheck", "-parse-as-library", "-swift-version", "6",
+                "-sdk", sdk, "-target", arch + "-apple-ios17.0-simulator",
+                "-module-cache-path", str(work / "module-cache"), *map(str, sources)])
+            record["welcomeRoles"].append(dict(role=role, actualIOSSDKTyped=True,
+                sourceHashes={source.name: hashlib.sha256(source.read_bytes()).hexdigest() for source in sources}))
+            save()
+        record.update(accepted=len(record["positiveRoles"]) == len(CASES) * 2 and len(record["negativeControls"]) == len(CASES) and len(record["welcomeRoles"]) == 2,
                       scope="Actual SDK-typed view composition with all original missing-dot faults rejected. Native app rendering remains a separate check.")
     finally:
         shutil.rmtree(work)
