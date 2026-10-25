@@ -85,8 +85,8 @@ height with the fixed map. Scroll to reach every place and the full detail.
 
 1. Keep all supplied records and marker names. Make each row selection update
    the camera center and matching detail.
-2. Replace the visible TODO with fictional place content. If adding a detail
-   property, supply it in every initializer.
+2. Replace the empty visit-note state with fictional place content. If adding
+   a detail property, supply it in every initializer.
 3. Distinguish the selected place without relying on color alone and retain
    its accessible name.
 4. Keep list and detail reachable on a small display at larger text sizes.

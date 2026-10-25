@@ -20,13 +20,13 @@ struct ContentView: View {
         Place(
             name: "Neighborhood Cafe", subtitle: "Sketchbook break stop",
             detail:
-                "Useful for practicing map annotations, category tags, and place metadata.",
+                "Sketchbook break: draw one detail from the surroundings.",
             coordinate: CLLocationCoordinate2D(
                 latitude: 39.2979, longitude: -76.5907)),
         Place(
             name: "Harbor Overlook", subtitle: "Golden-hour view",
             detail:
-                "This stop works well for combining a scenic map card with a compact planning note.",
+                "Photo plan: compare the light before and after sunset.",
             coordinate: CLLocationCoordinate2D(
                 latitude: 39.2850, longitude: -76.6010)),
     ]
