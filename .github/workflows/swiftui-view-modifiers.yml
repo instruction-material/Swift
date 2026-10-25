@@ -3,6 +3,7 @@ name: SwiftUI view composition
 on:
   pull_request:
     paths:
+      - SAD1-Welcome-Profile-App/**
       - SAD2-Media-Gallery-App/**
       - SAD3-Multi-Tab-Hobby-App/**
       - SAD-Swift-UI-Shapes-Studio/**
@@ -11,6 +12,7 @@ on:
   push:
     branches: [main]
     paths:
+      - SAD1-Welcome-Profile-App/**
       - SAD2-Media-Gallery-App/**
       - SAD3-Multi-Tab-Hobby-App/**
       - SAD-Swift-UI-Shapes-Studio/**
@@ -32,7 +34,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - name: Check all three packs and reject their original self-wrapping faults
+      - name: Check view composition and typecheck Welcome source
         run: python3 tests/verify_swiftui_modifiers.py --proof output/swiftui-modifiers.json
       - name: Retain exact SDK-typed ASTs and owned process evidence
         if: always()

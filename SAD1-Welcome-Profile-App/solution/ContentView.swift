@@ -32,27 +32,26 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    ZStack(alignment: .bottomLeading) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Welcome to Swift App Development")
+                            .font(.title.bold())
+                            .foregroundStyle(.white)
+                        Text(
+                            "Start with a real profile app, not just a single text label."
+                        )
+                        .foregroundStyle(.white.opacity(0.85))
+                        TagRow(items: profile.interests)
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(24)
+                    .frame(maxWidth: .infinity, minHeight: 220, alignment: .bottomLeading)
+                    .background(
                         LinearGradient(
                             colors: [.blue, .mint],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
-                        )
-                        .frame(height: 220)
-                        .clipShape(RoundedRectangle(cornerRadius: 28))
-
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Welcome to Swift App Development")
-                                .font(.title.bold())
-                                .foregroundStyle(.white)
-                            Text(
-                                "Start with a real profile app, not just a single text label."
-                            )
-                            .foregroundStyle(.white.opacity(0.85))
-                            TagRow(items: profile.interests)
-                        }
-                        .padding(24)
-                    }
+                        ),
+                        in: RoundedRectangle(cornerRadius: 28))
 
                     InfoSection(title: profile.name, subtitle: profile.role) {
                         Text(profile.bio)
@@ -135,12 +134,17 @@ struct InfoSection<Content: View>: View {
 
 struct TagRow: View {
     let items: [String]
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
-        HStack(spacing: 8) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
+            : AnyLayout(HStackLayout(spacing: 8))
+        layout {
             ForEach(items, id: \.self) { item in
                 Text(item)
                     .font(.caption.weight(.semibold))
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
                     .background(.white.opacity(0.18), in: Capsule())
