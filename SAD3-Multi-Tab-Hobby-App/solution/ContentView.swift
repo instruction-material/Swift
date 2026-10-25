@@ -137,6 +137,9 @@ struct ActivityRow: View {
     var body: some View {
         HStack(spacing: 14) {
             Image(systemName: activity.icon)
+                .resizable()
+                .scaledToFit()
+                .padding(9)
                 .frame(width: 38, height: 38)
                 .background(
                     Color.blue.opacity(0.14),
@@ -148,6 +151,8 @@ struct ActivityRow: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
+            .fixedSize(horizontal: false, vertical: true)
+            .layoutPriority(1)
 
             Spacer()
 
