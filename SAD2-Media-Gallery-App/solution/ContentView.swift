@@ -11,6 +11,7 @@ struct Artwork: Identifiable, Hashable {
 }
 
 struct ContentView: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     private let artworks = [
         Artwork(
             title: "Sunset Poster", category: "Photo", accent: .orange,
@@ -55,9 +56,7 @@ struct ContentView: View {
 
                 ScrollView {
                     LazyVGrid(
-                        columns: [
-                            GridItem(.flexible()), GridItem(.flexible()),
-                        ], spacing: 18
+                        columns: columns, spacing: 18
                     ) {
                         ForEach(filteredArtworks) { artwork in
                             NavigationLink {
@@ -88,6 +87,12 @@ struct ContentView: View {
                 }
             }
         }
+    }
+
+    private var columns: [GridItem] {
+        dynamicTypeSize.isAccessibilitySize
+            ? [GridItem(.flexible())]
+            : [GridItem(.flexible()), GridItem(.flexible())]
     }
 
     private var filteredArtworks: [Artwork] {
@@ -129,9 +134,11 @@ struct ArtworkCard: View {
 
             Text(artwork.title)
                 .font(.headline)
+                .fixedSize(horizontal: false, vertical: true)
             Text(artwork.summary)
                 .font(.footnote)
                 .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
             Text(artwork.category)
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(artwork.accent)
@@ -162,8 +169,10 @@ struct ArtworkDetailView: View {
 
                 Text(artwork.title)
                     .font(.largeTitle.bold())
+                    .fixedSize(horizontal: false, vertical: true)
                 Text(artwork.detail)
                     .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Button {
                     onToggleFavorite()
@@ -172,6 +181,8 @@ struct ArtworkDetailView: View {
                         isFavorite ? "Remove Favorite" : "Add Favorite",
                         systemImage: isFavorite ? "heart.slash" : "heart.fill"
                     )
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
