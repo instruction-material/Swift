@@ -76,6 +76,7 @@ struct ContentView: View {
                                             .foregroundStyle(.orange)
                                     }
                                 }
+                                .contentShape(Rectangle())
                             }
                         }
                     }
