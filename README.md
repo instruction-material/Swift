@@ -4,6 +4,8 @@ Source repository: [instruction-material/Swift](https://github.com/instruction-m
 
 ## Project packs
 
+[HobbyMap](SW6-Hobby-Structure/README.md) covers app structure, [FavoriteNote](SW7-Favorite-Editor/README.md) covers shared state, and [TaskReview](SW14-Accessible-Tasks/README.md) covers accessibility.
+
 The [FirstLaunch project](SW1-2-First-Launch/README.md) covers the first simulator launch and Xcode project anatomy.
 
 1. [Welcome Profile App](SAD1-Welcome-Profile-App/README.md), followed by the foundations exercises

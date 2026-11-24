@@ -82,7 +82,10 @@ Canonical source repository: `Swift`
 | `SW1-2-First-Launch` |
 | `SW4-Profile-Interests` |
 | `SW5-Lesson-Cards` |
+| `SW6-Hobby-Structure` |
+| `SW7-Favorite-Editor` |
 | `SW13-Tracker-Debugging` |
+| `SW14-Accessible-Tasks` |
 
 ## Original source inventory
 

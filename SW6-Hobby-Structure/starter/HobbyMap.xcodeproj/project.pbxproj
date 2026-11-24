@@ -1,0 +1,456 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		715C0E4A5B6622BDB012F4DC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B081AE67DD11F2D6842C7E3 /* Foundation.framework */; };
+		90291134397806BEBD738B40 /* HobbyMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0834B8429F4B6F300F6471E5 /* HobbyMapApp.swift */; };
+		A64211437DF98078ED06CBE0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B081AE67DD11F2D6842C7E3 /* Foundation.framework */; };
+		B5737F0813A65D9CDAC42107 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20CC12AFAD969F8DAEE5556 /* ContentView.swift */; };
+		D0AD640C276BABDE9798D39D /* HobbyMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592654A37BE0C397CF26DCBE /* HobbyMapUITests.swift */; };
+		EA095A5F477D3431D12ABEDC /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCCF383297D364A4101CDEE /* SampleData.swift */; };
+		F1864EAB36F9B56A1AEF496C /* HobbyCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624D370CA6FC4DB15A4F1987 /* HobbyCard.swift */; };
+		F187A5E7404DC45BAB2E7A3F /* Hobby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F405FD980724E324D4E9F8 /* Hobby.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		50D1169F235329942E5252F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CFCE43A7FD60E30A93018B63 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9DDED38E80C849627DA5C111;
+			remoteInfo = HobbyMap;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0834B8429F4B6F300F6471E5 /* HobbyMapApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HobbyMapApp.swift; sourceTree = "<group>"; };
+		27F405FD980724E324D4E9F8 /* Hobby.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Hobby.swift; sourceTree = "<group>"; };
+		4D90CB7389DDD211A87DB173 /* HobbyMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HobbyMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		592654A37BE0C397CF26DCBE /* HobbyMapUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HobbyMapUITests.swift; sourceTree = "<group>"; };
+		624D370CA6FC4DB15A4F1987 /* HobbyCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HobbyCard.swift; sourceTree = "<group>"; };
+		8B081AE67DD11F2D6842C7E3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		ABCCF383297D364A4101CDEE /* SampleData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		B7384068A66DBC48588EB978 /* HobbyMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HobbyMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D20CC12AFAD969F8DAEE5556 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5850AA83BD38930CA87FDF4E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				715C0E4A5B6622BDB012F4DC /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A113AF7A8A9BFA4BC0AE62FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A64211437DF98078ED06CBE0 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2A71834BAE2D61B8B2917662 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4D90CB7389DDD211A87DB173 /* HobbyMap.app */,
+				B7384068A66DBC48588EB978 /* HobbyMapUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5D6FA1FF53E1D6C5BACF0141 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				77B05FC6FDD1DA3062A21BC4 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		77B05FC6FDD1DA3062A21BC4 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				8B081AE67DD11F2D6842C7E3 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		939E50A7E56B721E28FFCE1B = {
+			isa = PBXGroup;
+			children = (
+				2A71834BAE2D61B8B2917662 /* Products */,
+				5D6FA1FF53E1D6C5BACF0141 /* Frameworks */,
+				AF6FABD13C9427280E6406A6 /* HobbyMap */,
+				D987EE895FCADF7459936340 /* UI Tests */,
+			);
+			sourceTree = "<group>";
+		};
+		AF6FABD13C9427280E6406A6 /* HobbyMap */ = {
+			isa = PBXGroup;
+			children = (
+				D20CC12AFAD969F8DAEE5556 /* ContentView.swift */,
+				27F405FD980724E324D4E9F8 /* Hobby.swift */,
+				624D370CA6FC4DB15A4F1987 /* HobbyCard.swift */,
+				0834B8429F4B6F300F6471E5 /* HobbyMapApp.swift */,
+				ABCCF383297D364A4101CDEE /* SampleData.swift */,
+			);
+			name = HobbyMap;
+			sourceTree = "<group>";
+		};
+		D987EE895FCADF7459936340 /* UI Tests */ = {
+			isa = PBXGroup;
+			children = (
+				592654A37BE0C397CF26DCBE /* HobbyMapUITests.swift */,
+			);
+			name = "UI Tests";
+			path = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9DDED38E80C849627DA5C111 /* HobbyMap */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0762474D0C3EC2EFF1ABADD6 /* Build configuration list for PBXNativeTarget "HobbyMap" */;
+			buildPhases = (
+				422AEE8762A1C22A64388274 /* Sources */,
+				A113AF7A8A9BFA4BC0AE62FA /* Frameworks */,
+				458ABC49FAF89042AC239394 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HobbyMap;
+			productName = HobbyMap;
+			productReference = 4D90CB7389DDD211A87DB173 /* HobbyMap.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C73183F4936B1E9D2BBE5554 /* HobbyMapUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CADB4176248085D779D75757 /* Build configuration list for PBXNativeTarget "HobbyMapUITests" */;
+			buildPhases = (
+				4818224CCE995EB8EBEFF35D /* Sources */,
+				5850AA83BD38930CA87FDF4E /* Frameworks */,
+				10F89A7F2D4BE1F22F000C1D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				36E5840ECE5BE31E8C55796F /* PBXTargetDependency */,
+			);
+			name = HobbyMapUITests;
+			productName = HobbyMapUITests;
+			productReference = B7384068A66DBC48588EB978 /* HobbyMapUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CFCE43A7FD60E30A93018B63 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 079643EAF21BB63EF101FCB4 /* Build configuration list for PBXProject "HobbyMap" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 939E50A7E56B721E28FFCE1B;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 2A71834BAE2D61B8B2917662 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9DDED38E80C849627DA5C111 /* HobbyMap */,
+				C73183F4936B1E9D2BBE5554 /* HobbyMapUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		10F89A7F2D4BE1F22F000C1D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		458ABC49FAF89042AC239394 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		422AEE8762A1C22A64388274 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5737F0813A65D9CDAC42107 /* ContentView.swift in Sources */,
+				F187A5E7404DC45BAB2E7A3F /* Hobby.swift in Sources */,
+				F1864EAB36F9B56A1AEF496C /* HobbyCard.swift in Sources */,
+				90291134397806BEBD738B40 /* HobbyMapApp.swift in Sources */,
+				EA095A5F477D3431D12ABEDC /* SampleData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4818224CCE995EB8EBEFF35D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0AD640C276BABDE9798D39D /* HobbyMapUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		36E5840ECE5BE31E8C55796F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HobbyMap;
+			target = 9DDED38E80C849627DA5C111 /* HobbyMap */;
+			targetProxy = 50D1169F235329942E5252F7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1BB64B96B467F436C19DE7DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.example.hobbymap.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HobbyMap;
+			};
+			name = Debug;
+		};
+		4F4949E2E9433E96FF47D35D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		7DA3A3D24AF2800B0A49178C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.example.hobbymap;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A68620786CFD63E300835F83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.example.hobbymap;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AC47855087DA03849A1AF54D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		E9DD918A9445DCF372198C08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = net.example.hobbymap.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HobbyMap;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0762474D0C3EC2EFF1ABADD6 /* Build configuration list for PBXNativeTarget "HobbyMap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7DA3A3D24AF2800B0A49178C /* Release */,
+				A68620786CFD63E300835F83 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		079643EAF21BB63EF101FCB4 /* Build configuration list for PBXProject "HobbyMap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F4949E2E9433E96FF47D35D /* Debug */,
+				AC47855087DA03849A1AF54D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CADB4176248085D779D75757 /* Build configuration list for PBXNativeTarget "HobbyMapUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E9DD918A9445DCF372198C08 /* Release */,
+				1BB64B96B467F436C19DE7DB /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CFCE43A7FD60E30A93018B63 /* Project object */;
+}
