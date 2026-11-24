@@ -18,7 +18,7 @@ struct ContentView: View {
                     Text(complete ? "Status: complete" : "Status: open")
                     Button("Save task", systemImage: "tray.and.arrow.down") { saved = true }
                     Button("Delete task", role: .destructive) { confirmRemoval = true }
-                        .confirmationDialog("Delete this task?", isPresented: $confirmRemoval) {
+                        .alert("Delete this task?", isPresented: $confirmRemoval) {
                             Button("Confirm deletion", role: .destructive) { hasTask = false }
                             Button("Cancel", role: .cancel) {}
                         }
