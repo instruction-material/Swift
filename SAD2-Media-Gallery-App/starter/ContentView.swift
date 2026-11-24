@@ -56,6 +56,7 @@ struct ContentView: View {
                                                 .font(.system(size: 28))
                                                 .foregroundStyle(.white)
                                         }
+                                        .accessibilityHidden(true)
 
                                     Text(artwork.title)
                                         .font(.headline)
@@ -65,6 +66,7 @@ struct ContentView: View {
                                         .foregroundStyle(.secondary)
                                 }
                             }
+                            .accessibilityValue(artwork.summary)
                         }
                     }
                 }
