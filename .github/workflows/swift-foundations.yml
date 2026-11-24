@@ -1,0 +1,54 @@
+name: Build Swift foundation exercises
+
+on:
+  pull_request:
+    paths:
+      - SW4-Profile-Interests/**
+      - SW5-Lesson-Cards/**
+      - .github/workflows/swift-foundations.yml
+  push:
+    branches: [main]
+    paths:
+      - SW4-Profile-Interests/**
+      - SW5-Lesson-Cards/**
+      - .github/workflows/swift-foundations.yml
+
+permissions:
+  contents: read
+
+jobs:
+  simulator:
+    runs-on: macos-26
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Build and launch each starter and solution
+        shell: bash
+        run: |
+          set -euo pipefail
+          sdk=$(xcrun --sdk iphonesimulator --show-sdk-path)
+          target="$(uname -m)-apple-ios17.0-simulator"
+          device=$(xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"]
+          print(next(d["udid"] for runtime, group in devices.items() if ".iOS-" in runtime
+                     for d in group if d["name"].startswith("iPhone") and d["isAvailable"]))')
+          xcrun simctl bootstatus "$device" -b
+          for pack in SW4-Profile-Interests SW5-Lesson-Cards; do
+            for role in starter solution; do
+              app="$RUNNER_TEMP/$pack-$role.app"
+              bundle="org.example.$pack.$role"
+              mkdir "$app"
+              xcrun swiftc -swift-version 6 -sdk "$sdk" -target "$target" -parse-as-library "$pack/$role"/*.swift -o "$app/Exercise"
+              plutil -create xml1 "$app/Info.plist"
+              for entry in "CFBundleExecutable Exercise" "CFBundleIdentifier $bundle" "CFBundleName Exercise" "CFBundlePackageType APPL" "CFBundleVersion 1" "CFBundleShortVersionString 1.0" "MinimumOSVersion 17.0"; do
+                plutil -insert "${entry%% *}" -string "${entry#* }" "$app/Info.plist"
+              done
+              codesign --force --sign - "$app"
+              xcrun simctl install "$device" "$app"
+              xcrun simctl launch "$device" "$bundle"
+              xcrun simctl terminate "$device" "$bundle"
+            done
+          done

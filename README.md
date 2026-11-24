@@ -4,7 +4,9 @@ Source repository: [instruction-material/Swift](https://github.com/instruction-m
 
 ## Project packs
 
-1. [Welcome Profile App](SAD1-Welcome-Profile-App/README.md)
+1. [Welcome Profile App](SAD1-Welcome-Profile-App/README.md), followed by the foundations exercises
+   [Profile Interests](SW4-Profile-Interests/README.md) and
+   [Lesson Cards](SW5-Lesson-Cards/README.md).
 2. [Media Gallery App](SAD2-Media-Gallery-App/README.md)
 3. [Multi-Tab Hobby App](SAD3-Multi-Tab-Hobby-App/README.md)
 4. [Map Places App](SAD4-Map-Places-App/README.md)

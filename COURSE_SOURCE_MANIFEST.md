@@ -79,8 +79,12 @@ Canonical source repository: `Swift`
 | `SAD5-Simple-Tracker-App` |
 | `SAD6-API-Reference-App` |
 | `SAD7-Publish-Ready-Capstone` |
+| `SW4-Profile-Interests` |
+| `SW5-Lesson-Cards` |
 
-## Source Inventory
+## Original source inventory
+
+The counts below describe the initial inventory.
 
 - Top-level folders: 64
 - Active linked folders: 63
