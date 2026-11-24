@@ -53,7 +53,7 @@ struct ContentView: View {
                             Circle()
                                 .fill(.blue.gradient)
                                 .frame(width: 120, height: 120)
-                            shadow(color: .blue.opacity(0.25), radius: 10, y: 8)
+                                .shadow(color: .blue.opacity(0.25), radius: 10, y: 8)
 
                             Ellipse()
                                 .fill(.pink.gradient)
@@ -133,12 +133,12 @@ struct ContentView: View {
                             Rectangle()
                                 .fill(.mint)
                                 .frame(width: 24, height: 150)
-                            rotationEffect(.degrees(25))
+                                .rotationEffect(.degrees(25))
                                 .offset(x: -78, y: 54)
                             Rectangle()
                                 .fill(.mint)
                                 .frame(width: 24, height: 150)
-                            rotationEffect(.degrees(-25))
+                                .rotationEffect(.degrees(-25))
                                 .offset(x: 78, y: 54)
 
                             Circle()
