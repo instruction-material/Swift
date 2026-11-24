@@ -8,6 +8,8 @@ on:
       - SAD3-Multi-Tab-Hobby-App/**
       - SAD-Swift-UI-Shapes-Studio/**
       - tests/verify_swiftui_modifiers.py
+      - tests/GalleryCardUITests.swift
+      - tests/check-gallery-card.sh
       - .github/workflows/swiftui-view-modifiers.yml
   push:
     branches: [main]
@@ -17,6 +19,8 @@ on:
       - SAD3-Multi-Tab-Hobby-App/**
       - SAD-Swift-UI-Shapes-Studio/**
       - tests/verify_swiftui_modifiers.py
+      - tests/GalleryCardUITests.swift
+      - tests/check-gallery-card.sh
       - .github/workflows/swiftui-view-modifiers.yml
 
 permissions:
@@ -36,12 +40,15 @@ jobs:
           persist-credentials: false
       - name: Check view composition and typecheck Welcome source
         run: python3 tests/verify_swiftui_modifiers.py --proof output/swiftui-modifiers.json
+      - name: Check the Gallery starter card on an iPhone simulator
+        run: bash tests/check-gallery-card.sh
       - name: Retain exact SDK-typed ASTs and owned process evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: swiftui-view-modifiers
           path: |
+            output/gallery-card-tests.json
             output/swiftui-modifiers.json
             output/swiftui-modifier-logs/
           if-no-files-found: error
