@@ -1,0 +1,35 @@
+name: FirstLaunch simulator lessons
+on:
+  push:
+    branches: [main]
+    paths: ['SW1-2-First-Launch/**', '.github/workflows/swift-first-launch.yml']
+  pull_request:
+    paths: ['SW1-2-First-Launch/**', '.github/workflows/swift-first-launch.yml']
+permissions:
+  contents: read
+jobs:
+  simulator:
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Build each project and test the visible launch screen
+        shell: bash
+        run: |
+          set -euo pipefail
+          device=$(xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          print(next(d["udid"] for runtime, group in json.load(sys.stdin)["devices"].items()
+                     if ".iOS-" in runtime for d in group if d["name"].startswith("iPhone") and d["isAvailable"]))')
+          xcrun simctl bootstatus "$device" -b
+          for role in starter solution; do
+            products="$RUNNER_TEMP/first-launch-$role"
+            xcodebuild test -project "SW1-2-First-Launch/$role/FirstLaunch.xcodeproj" \
+              -scheme FirstLaunch -configuration Debug -destination "id=$device" \
+              -parallel-testing-enabled NO -derivedDataPath "$products" \
+              -resultBundlePath "$RUNNER_TEMP/$role.xcresult"
+            xcrun assetutil --info "$products/Build/Products/Debug-iphonesimulator/FirstLaunch.app/Assets.car" \
+              | python3 -c 'import json,sys; assert any(v.get("Name") == "ProfileAccent" for v in json.load(sys.stdin))'
+          done

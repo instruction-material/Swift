@@ -4,6 +4,8 @@ Source repository: [instruction-material/Swift](https://github.com/instruction-m
 
 ## Project packs
 
+The [FirstLaunch project](SW1-2-First-Launch/README.md) covers the first simulator launch and Xcode project anatomy.
+
 1. [Welcome Profile App](SAD1-Welcome-Profile-App/README.md), followed by the foundations exercises
    [Profile Interests](SW4-Profile-Interests/README.md) and
    [Lesson Cards](SW5-Lesson-Cards/README.md).

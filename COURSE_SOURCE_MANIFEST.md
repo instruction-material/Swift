@@ -79,6 +79,7 @@ Canonical source repository: `Swift`
 | `SAD5-Simple-Tracker-App` |
 | `SAD6-API-Reference-App` |
 | `SAD7-Publish-Ready-Capstone` |
+| `SW1-2-First-Launch` |
 | `SW4-Profile-Interests` |
 | `SW5-Lesson-Cards` |
 | `SW13-Tracker-Debugging` |
