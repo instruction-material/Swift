@@ -5,12 +5,14 @@ on:
     paths:
       - SW4-Profile-Interests/**
       - SW5-Lesson-Cards/**
+      - SW13-Tracker-Debugging/**
       - .github/workflows/swift-foundations.yml
   push:
     branches: [main]
     paths:
       - SW4-Profile-Interests/**
       - SW5-Lesson-Cards/**
+      - SW13-Tracker-Debugging/**
       - .github/workflows/swift-foundations.yml
 
 permissions:
@@ -24,6 +26,24 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+      - name: Run the tracker regression exercises
+        working-directory: SW13-Tracker-Debugging
+        run: |
+          for role in starter solution; do
+            work="$RUNNER_TEMP/tracker-$role"
+            mkdir "$work"
+            cp -R Package.swift "$role" "$work/"
+            swift test --package-path "$work"
+          done
+          work="$RUNNER_TEMP/tracker-starter"
+          cp solution/Tests/TrackerTests.swift "$work/starter/Tests/"
+          if swift test --package-path "$work" > "$RUNNER_TEMP/tracker-regression.log" 2>&1; then
+            echo "The starter unexpectedly passed the regression tests."
+            exit 1
+          fi
+          grep -F "Expectation failed" "$RUNNER_TEMP/tracker-regression.log"
+          cp solution/Tracker.swift "$work/starter/Tracker.swift"
+          swift test --package-path "$work"
       - name: Build and launch each starter and solution
         shell: bash
         run: |
@@ -36,7 +56,7 @@ jobs:
           print(next(d["udid"] for runtime, group in devices.items() if ".iOS-" in runtime
                      for d in group if d["name"].startswith("iPhone") and d["isAvailable"]))')
           xcrun simctl bootstatus "$device" -b
-          for pack in SW4-Profile-Interests SW5-Lesson-Cards; do
+          for pack in SW4-Profile-Interests SW5-Lesson-Cards SW13-Tracker-Debugging; do
             for role in starter solution; do
               app="$RUNNER_TEMP/$pack-$role.app"
               bundle="org.example.$pack.$role"

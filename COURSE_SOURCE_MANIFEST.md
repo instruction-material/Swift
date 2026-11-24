@@ -81,6 +81,7 @@ Canonical source repository: `Swift`
 | `SAD7-Publish-Ready-Capstone` |
 | `SW4-Profile-Interests` |
 | `SW5-Lesson-Cards` |
+| `SW13-Tracker-Debugging` |
 
 ## Original source inventory
 
