@@ -107,7 +107,10 @@ def main():
         # Supported Swift releases have emitted typed ASTs on either stream.
         ast = stdout.decode(errors="replace") + stderr.decode(errors="replace")
         assert "(source_file" in ast and "(struct_decl" in ast, label
-        matches = implicit_self_calls(ast, view, modifier)
+        modifiers = [modifier]
+        if pack == "SAD-Swift-UI-Shapes-Studio" and not negative:
+            modifiers.extend(["rotationEffect", "shadow"])
+        matches = [call for name in modifiers for call in implicit_self_calls(ast, view, name)]
         assert bool(matches) == negative, (label, matches[:2])
         row = dict(pack=pack, role=role, actualIOSSDKTyped=True,
                    sourceHashes={source.name: hashlib.sha256(source.read_bytes()).hexdigest() for source in sources},
