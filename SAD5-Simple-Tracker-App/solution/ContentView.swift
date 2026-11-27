@@ -40,6 +40,7 @@ struct ContentView: View {
                                 Text(item.title)
                                     .strikethrough(item.completed)
                                     .frame(maxWidth: .infinity, alignment: .leading)
+                                    .contentShape(Rectangle())
                             }
                             .buttonStyle(.plain)
                             .accessibilityLabel("Edit \(item.title)")
