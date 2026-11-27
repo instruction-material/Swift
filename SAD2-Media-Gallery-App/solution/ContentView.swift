@@ -71,6 +71,7 @@ struct ContentView: View {
                                     artwork: artwork,
                                     isFavorite: favorites.contains(artwork.id)
                                 )
+                                .contentShape(Rectangle())
                             }
                             .buttonStyle(.plain)
                         }

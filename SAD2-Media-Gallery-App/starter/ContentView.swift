@@ -65,6 +65,7 @@ struct ContentView: View {
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
                                 }
+                                .contentShape(Rectangle())
                             }
                             .accessibilityValue(artwork.summary)
                         }
